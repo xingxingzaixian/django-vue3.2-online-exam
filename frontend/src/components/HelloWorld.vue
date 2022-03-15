@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { AddFour } from '@icon-park/vue-next'
 
 defineProps<{ msg: string }>()
 
@@ -7,6 +8,11 @@ const count = ref(0)
 </script>
 
 <template>
+  <div style="display: flex; align-items: center">
+    <add-four theme="outline" />
+    <t-button theme="primary"> 新建 </t-button>
+  </div>
+
   <h1>{{ msg }}</h1>
 
   <p>
@@ -31,20 +37,18 @@ const count = ref(0)
   </p>
 </template>
 
-<style scoped>
-a {
-  color: #42b983;
+<style lang="less" scoped>
+h1 {
+  @apply text-3xl font-bold;
 }
 
-label {
-  margin: 0 0.5em;
-  font-weight: bold;
-}
+p {
+  a {
+    @apply text-green-400 underline;
+  }
 
-code {
-  background-color: #eee;
-  padding: 2px 4px;
-  border-radius: 4px;
-  color: #304455;
+  code {
+    @apply bg-gray-200 px-1 py-1 rounded text-gray-700;
+  }
 }
 </style>
