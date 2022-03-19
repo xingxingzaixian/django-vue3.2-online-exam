@@ -1,6 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { AddFour } from '@icon-park/vue-next'
+import useUserStore from '/@/store/user'
+
+const userStore = useUserStore()
+
+console.log(userStore.token)
+console.log(userStore.isLoggedIn)
+
+userStore.setUserInfo()
 
 defineProps<{ msg: string }>()
 

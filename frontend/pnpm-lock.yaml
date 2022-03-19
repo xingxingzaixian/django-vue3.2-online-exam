@@ -16,6 +16,7 @@ specifiers:
   eslint-plugin-prettier: ^4.0.0
   eslint-plugin-vue: ^8.5.0
   less: ^4.1.2
+  pinia: ^2.0.12
   postcss: ^8.4.8
   postcss-html: ^1.3.0
   postcss-import: ^14.0.2
@@ -31,12 +32,15 @@ specifiers:
   vite: ^2.8.0
   vue: ^3.2.25
   vue-eslint-parser: ^8.3.0
+  vue-router: ^4.0.14
   vue-tsc: ^0.29.8
 
 dependencies:
   '@icon-park/vue-next': 1.3.6_vue@3.2.31
+  pinia: 2.0.12_typescript@4.6.2+vue@3.2.31
   tdesign-vue-next: mirrors.tencent.com/tdesign-vue-next/0.10.1_vue@3.2.31
   vue: mirrors.tencent.com/vue/3.2.31
+  vue-router: 4.0.14_vue@3.2.31
 
 devDependencies:
   '@types/node': 17.0.21
@@ -476,6 +480,10 @@ packages:
       '@vue/shared': 3.2.31
     dev: false
 
+  /@vue/devtools-api/6.1.3:
+    resolution: {integrity: sha512-79InfO2xHv+WHIrH1bHXQUiQD/wMls9qBk6WVwGCbdwP7/3zINtvqPNMtmSHXsIKjvUAHc8L0ouOj6ZQQRmcXg==}
+    dev: false
+
   /@vue/reactivity-transform/3.2.31:
     resolution: {integrity: sha512-uS4l4z/W7wXdI+Va5pgVxBJ345wyGFKvpPYtdSgvfJfX/x2Ymm6ophQlXXB6acqGHtXuBqNyyO3zVp9b1r0MOA==}
     dependencies:
@@ -652,7 +660,7 @@ packages:
       normalize-path: 3.0.0
       readdirp: mirrors.tencent.com/readdirp/3.6.0
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: mirrors.tencent.com/fsevents/2.3.2
     dev: true
 
   /clone-regexp/2.2.0:
@@ -746,15 +754,6 @@ packages:
       '@emmetio/abbreviation': 2.2.3
       '@emmetio/css-abbreviation': 2.1.4
     dev: true
-
-  /errno/0.1.8:
-    resolution: {integrity: sha512-dJ6oBr5SQ1VSd9qkk7ByRgb/1SH4JZjCHSW/mr63/QcXO9zLVxvJ6Oy13nio03rxpSnVDDjFor75SjVeZWPW/A==}
-    hasBin: true
-    requiresBuild: true
-    dependencies:
-      prr: 1.0.1
-    dev: true
-    optional: true
 
   /es-abstract/1.19.1:
     resolution: {integrity: sha512-2vJ6tjA/UfqLm2MPs7jxVybLoB8i1t1Jd9R3kISld20sIxPcTbLuggQOUxeWeAvIUkduv/CfMjuh4WmiXr2v9w==}
@@ -1139,14 +1138,6 @@ packages:
     resolution: {integrity: sha512-MhLuK+2gUcnZe8ZHlaaINnQLl0xRIGRfcGk2yl8xoQAfHrSsL3rYu6FCmBdkdbhc9EPlwyGHewaRsvwRMJtAlA==}
     dev: true
 
-  /fsevents/2.3.2:
-    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
-    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
-    os: [darwin]
-    requiresBuild: true
-    dev: true
-    optional: true
-
   /function-bind/1.1.1:
     resolution: {integrity: sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==}
     dev: true
@@ -1297,10 +1288,10 @@ packages:
       parse-node-version: 1.0.1
       tslib: mirrors.tencent.com/tslib/2.3.1
     optionalDependencies:
-      errno: 0.1.8
+      errno: mirrors.tencent.com/errno/0.1.8
       graceful-fs: mirrors.tencent.com/graceful-fs/4.2.9
       image-size: 0.5.5
-      make-dir: 2.1.0
+      make-dir: mirrors.tencent.com/make-dir/2.1.0
       mime: mirrors.tencent.com/mime/1.6.0
       needle: 2.9.1
       source-map: mirrors.tencent.com/source-map/0.6.1
@@ -1332,16 +1323,6 @@ packages:
     dependencies:
       sourcemap-codec: 1.4.8
     dev: true
-
-  /make-dir/2.1.0:
-    resolution: {integrity: sha512-LS9X+dc8KLxXCb8dni79fLIIUA5VyZoyjSMCwTluaXA0o27cCK0bhXkpgw+sTXVpPy/lSO57ilRixqk0vDmtRA==}
-    engines: {node: '>=6'}
-    requiresBuild: true
-    dependencies:
-      pify: 4.0.1
-      semver: mirrors.tencent.com/semver/5.7.1
-    dev: true
-    optional: true
 
   /map-obj/1.0.1:
     resolution: {integrity: sha1-2TPOuSBdgr3PSIb2dCvcK03qFG0=}
@@ -1525,6 +1506,24 @@ packages:
     engines: {node: '>=6'}
     dev: true
     optional: true
+
+  /pinia/2.0.12_typescript@4.6.2+vue@3.2.31:
+    resolution: {integrity: sha512-tUeuYGFrLU5irmGyRAIxp35q1OTcZ8sKpGT4XkPeVcG35W4R6cfXDbCGexzmVqH5lTQJJTXXbNGutIu9yS5yew==}
+    peerDependencies:
+      '@vue/composition-api': ^1.4.0
+      typescript: '>=4.4.4'
+      vue: ^2.6.14 || ^3.2.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+      typescript:
+        optional: true
+    dependencies:
+      '@vue/devtools-api': 6.1.3
+      typescript: mirrors.tencent.com/typescript/4.6.2
+      vue: mirrors.tencent.com/vue/3.2.31
+      vue-demi: 0.12.4_vue@3.2.31
+    dev: false
 
   /postcss-html/1.3.0:
     resolution: {integrity: sha512-ewbwd7OGW4dLsErtvZH9HpVMEcXnlhYSzKsr7MepGlOT8imHTIZ/+pdfEruLS+hTYapLTQAWDnoQcJpsYU4uRw==}
@@ -1759,7 +1758,7 @@ packages:
     engines: {node: '>=10.0.0'}
     hasBin: true
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: mirrors.tencent.com/fsevents/2.3.2
     dev: true
 
   /shebang-command/2.0.0:
@@ -2138,7 +2137,7 @@ packages:
       resolve: mirrors.tencent.com/resolve/1.22.0
       rollup: 2.70.1
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: mirrors.tencent.com/fsevents/2.3.2
     dev: true
 
   /void-elements/3.1.0:
@@ -2262,6 +2261,21 @@ packages:
       vscode-typescript-languageservice: 0.29.8
     dev: true
 
+  /vue-demi/0.12.4_vue@3.2.31:
+    resolution: {integrity: sha512-ztPDkFt0TSUdoq1ZI6oD730vgztBkiByhUW7L1cOTebiSBqSYfSQgnhYakYigBkyAybqCTH7h44yZuDJf2xILQ==}
+    engines: {node: '>=12'}
+    hasBin: true
+    requiresBuild: true
+    peerDependencies:
+      '@vue/composition-api': ^1.0.0-rc.1
+      vue: ^3.0.0-0 || ^2.6.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+    dependencies:
+      vue: mirrors.tencent.com/vue/3.2.31
+    dev: false
+
   /vue-eslint-parser/8.3.0_eslint@8.11.0:
     resolution: {integrity: sha512-dzHGG3+sYwSf6zFBa0Gi9ZDshD7+ad14DGOdTLjruRVgZXe2J+DcZ9iUhyR48z5g1PqRa20yt3Njna/veLJL/g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
@@ -2279,6 +2293,15 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /vue-router/4.0.14_vue@3.2.31:
+    resolution: {integrity: sha512-wAO6zF9zxA3u+7AkMPqw9LjoUCjSxfFvINQj3E/DceTt6uEz1XZLraDhdg2EYmvVwTBSGlLYsUw8bDmx0754Mw==}
+    peerDependencies:
+      vue: ^3.2.0
+    dependencies:
+      '@vue/devtools-api': 6.1.3
+      vue: mirrors.tencent.com/vue/3.2.31
+    dev: false
 
   /vue-tsc/0.29.8_typescript@4.6.2:
     resolution: {integrity: sha512-pT0wLRjvRuSmB+J4WJT6uuV9mO0KtSSXEAtaVXZQzyk5+DJdbLIQTbRce/TXSkfqt1l1WogO78RjtOJFiMCgfQ==}
@@ -2725,6 +2748,17 @@ packages:
     engines: {node: '>=0.12'}
     dev: true
 
+  mirrors.tencent.com/errno/0.1.8:
+    resolution: {integrity: sha512-dJ6oBr5SQ1VSd9qkk7ByRgb/1SH4JZjCHSW/mr63/QcXO9zLVxvJ6Oy13nio03rxpSnVDDjFor75SjVeZWPW/A==, registry: https://mirrors.cloud.tencent.com/npm/, tarball: https://mirrors.tencent.com/npm/errno/-/errno-0.1.8.tgz}
+    name: errno
+    version: 0.1.8
+    hasBin: true
+    requiresBuild: true
+    dependencies:
+      prr: 1.0.1
+    dev: true
+    optional: true
+
   mirrors.tencent.com/error-ex/1.3.2:
     resolution: {integrity: sha512-7dFHNmqeFSEt2ZBsCriorKnn3Z2pj+fd9kmI6QoWw4//DL+icEBfc0U7qJCisqrTsKTjw4fNFy2pW9OqStD84g==, registry: https://mirrors.cloud.tencent.com/npm/, tarball: https://mirrors.tencent.com/npm/error-ex/-/error-ex-1.3.2.tgz}
     name: error-ex
@@ -2990,6 +3024,16 @@ packages:
     name: fs.realpath
     version: 1.0.0
     dev: true
+
+  mirrors.tencent.com/fsevents/2.3.2:
+    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==, registry: https://mirrors.cloud.tencent.com/npm/, tarball: https://mirrors.tencent.com/npm/fsevents/-/fsevents-2.3.2.tgz}
+    name: fsevents
+    version: 2.3.2
+    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
 
   mirrors.tencent.com/function-bind/1.1.1:
     resolution: {integrity: sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==, registry: https://mirrors.cloud.tencent.com/npm/, tarball: https://mirrors.tencent.com/npm/function-bind/-/function-bind-1.1.1.tgz}
@@ -3450,6 +3494,18 @@ packages:
     dependencies:
       yallist: mirrors.tencent.com/yallist/4.0.0
     dev: true
+
+  mirrors.tencent.com/make-dir/2.1.0:
+    resolution: {integrity: sha512-LS9X+dc8KLxXCb8dni79fLIIUA5VyZoyjSMCwTluaXA0o27cCK0bhXkpgw+sTXVpPy/lSO57ilRixqk0vDmtRA==, registry: https://mirrors.cloud.tencent.com/npm/, tarball: https://mirrors.tencent.com/npm/make-dir/-/make-dir-2.1.0.tgz}
+    name: make-dir
+    version: 2.1.0
+    engines: {node: '>=6'}
+    requiresBuild: true
+    dependencies:
+      pify: 4.0.1
+      semver: mirrors.tencent.com/semver/5.7.1
+    dev: true
+    optional: true
 
   mirrors.tencent.com/merge2/1.4.1:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==, registry: https://mirrors.cloud.tencent.com/npm/, tarball: https://mirrors.tencent.com/npm/merge2/-/merge2-1.4.1.tgz}
