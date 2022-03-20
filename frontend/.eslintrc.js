@@ -15,12 +15,25 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'import/extensions': 'off',
+    'import/extensions': [
+      'never',
+      {
+        'vue': 'always',
+      }
+    ],
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': ['error', { ignoreTypeReferences: true }],
     'import/prefer-default-export': 'off',
     'import/no-absolute-path': 'off',
-    'no-prototype-builtins': 'off',
+    // 组件不需要使用多个单词组成
+    'vue/multi-word-component-names': 'off',
+    // 函数参数不能重新赋值，对象类型的属性可以重新赋值
+    'no-param-reassign': [
+      'error',
+      {
+        'props': false
+      }
+    ],
     'import/no-unresolved': [
       2,
       {

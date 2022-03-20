@@ -1,6 +1,6 @@
 import type { RouteRecordRaw } from 'vue-router'
 import { Router, createRouter, createWebHashHistory, RouterHistory } from 'vue-router'
-
+import useUserStore from '../store/user'
 class RouteView {
   // 路由对象
   private router: Router | unknown = undefined
@@ -47,8 +47,26 @@ class RouteView {
 
     const curRouter = this.router as Router
     curRouter.beforeEach((to, _, next) => {
-      console.log(to)
-      next()
+      const userStore = useUserStore()
+      // 1. 如果页面需要改变 title，就设置 title
+      if (to.meta.title) {
+        document.title = to.meta.title as string
+      }
+
+      // 2. 如果页面不需要登录，就直接跳转
+      if (to.meta.noAuth) {
+        return next()
+      }
+
+      // 3 如果没有登录，就跳转到登录页
+      if (!userStore.isLoggedIn) {
+        next({
+          name: 'login',
+          query: { redirect: to.fullPath },
+        })
+      } else {
+        next()
+      }
     })
   }
 
