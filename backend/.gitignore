@@ -1,0 +1,8 @@
+.idea/
+*.iml
+target/
+logs
+.venv/
+Pipfile.lock
+apps/*/migrations/*.py
+*.pyc
