@@ -6,26 +6,26 @@
 
     <div class="login">
       <div class="login-form">
-        <div>用户登录</div>
-        <t-form ref="form" :data="formData" :colon="true" :label-width="0" @submit="onSubmit">
-          <t-form-item name="account">
-            <t-input v-model="formData.username" clearable placeholder="请输入账户名">
-              <template #prefix-icon>
+        <div class="title">用户登录</div>
+        <el-form ref="ruleFormRef" :model="formData" :rules="rules" :label-width="0">
+          <el-form-item prop="username">
+            <el-input v-model="formData.username" clearable placeholder="请输入账户名">
+              <template #prefix>
                 <icon-park name="user" />
               </template>
-            </t-input>
-          </t-form-item>
-          <t-form-item name="password">
-            <t-input v-model="formData.password" type="password" clearable placeholder="请输入密码">
-              <template #prefix-icon>
+            </el-input>
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input v-model="formData.password" type="password" show-password placeholder="请输入密码">
+              <template #prefix>
                 <icon-park name="lock" />
               </template>
-            </t-input>
-          </t-form-item>
-          <t-form-item style="padding-top: 8px">
-            <t-button theme="primary" type="submit" block>登录</t-button>
-          </t-form-item>
-        </t-form>
+            </el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button class="submit" type="primary" @click="onSubmit()">登录</el-button>
+          </el-form-item>
+        </el-form>
       </div>
     </div>
   </div>
@@ -33,15 +33,18 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
-import { MessagePlugin, SubmitContext } from 'tdesign-vue-next'
 import { useRouter, useRoute } from 'vue-router'
-import IconPark from '/@/components/icon-park/Index.vue'
+import type { FormInstance } from 'element-plus'
+import IconPark from '/@/components/IconPark/Index.vue'
 import { LoginForm } from './types'
 import useUserStore from '/@/store/user'
+import { successMessage, errorMessage } from '/@/utils/message'
 
 const userStore = useUserStore()
 const router = useRouter()
 const route = useRoute()
+
+const ruleFormRef = ref<FormInstance>()
 
 const redirect = ref<string>((route.query.redirect as string) || '/')
 const formData = reactive<LoginForm>({
@@ -49,21 +52,30 @@ const formData = reactive<LoginForm>({
   password: '12345678',
 })
 
-const onSubmit = (context: SubmitContext<FormData>) => {
-  if (context.validateResult === true) {
-    userStore
-      .login(formData)
-      .then(() => {
-        MessagePlugin.success('登录成功')
-        router.push(redirect.value)
-      })
-      .catch(() => {
-        MessagePlugin.error('登录失败，请检查用户名或密码')
-      })
-  } else {
-    console.log('Validate Errors: ', context.firstError, context.validateResult)
-    MessagePlugin.warning(context.firstError as string)
-  }
+const rules = reactive({
+  username: [{ required: true, message: '请输入账户名', trigger: 'blur' }],
+  password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+})
+
+const onSubmit = () => {
+  if (!ruleFormRef.value) return
+
+  ruleFormRef.value.validate(async (valid: boolean) => {
+    if (valid) {
+      userStore
+        .login(formData)
+        .then(() => {
+          successMessage('登录成功')
+          router.push(redirect.value)
+        })
+        .catch(() => {
+          errorMessage('登录失败，请检查用户名或密码')
+        })
+    } else {
+      console.log('error submit!')
+      return false
+    }
+  })
 }
 </script>
 
@@ -105,14 +117,14 @@ const onSubmit = (context: SubmitContext<FormData>) => {
       transform: translate(50%, 50%);
     }
     .login-form {
-      @apply shadow-2xl h-64 w-80;
+      @apply shadow-2xl h-64 w-80 p-4;
 
-      div {
+      .title {
         @apply text-center text-2xl text-gray-500 mt-2;
       }
 
-      .t-form {
-        @apply m-6;
+      .submit {
+        @apply w-full;
       }
     }
   }

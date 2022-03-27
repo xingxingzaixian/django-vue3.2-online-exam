@@ -2,9 +2,8 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import { useIconPark } from '/@/components/icon-park/config'
-
-import './styles/index.css'
+import { useIconPark } from './components/IconPark/config'
+import './styles/index.less'
 
 const app = createApp(App)
 

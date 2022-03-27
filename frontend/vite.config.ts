@@ -4,7 +4,7 @@ import vue from '@vitejs/plugin-vue';
 import { resolve } from 'path';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
-import { TDesignResolver } from 'unplugin-vue-components/resolvers';
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 // https://vitejs.dev/config/
 export default ({ mode }: ConfigEnv): UserConfigExport => {
@@ -27,14 +27,10 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
     plugins: [
       vue(),
       AutoImport({
-        resolvers: [TDesignResolver({
-          library: 'vue-next'
-        })],
+        resolvers: [ElementPlusResolver()],
       }),
       Components({
-        resolvers: [TDesignResolver({
-          library: 'vue-next'
-        })],
+        resolvers: [ElementPlusResolver()],
       })
     ],
     resolve: {
@@ -66,6 +62,16 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
               return id.toString().split('node_modules/')[1].split('/')[0].toString()
             }
           }
+        }
+      }
+    },
+    css: {
+      preprocessorOptions: {
+        less: {
+          modifyVars: {
+            hack: `true; @import (reference) "${resolve('src/styles/variables.less')}";`
+          },
+          javascriptEnabled: true
         }
       }
     }

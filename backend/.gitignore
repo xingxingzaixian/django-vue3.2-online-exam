@@ -6,3 +6,4 @@ logs
 Pipfile.lock
 apps/*/migrations/*.py
 *.pyc
+.env

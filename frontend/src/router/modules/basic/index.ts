@@ -3,7 +3,7 @@ import type { RouteRecordRaw } from 'vue-router'
 const basicRoute: RouteRecordRaw[] = [
   {
     path: '/login',
-    name: 'login',
+    name: 'Login',
     component: () => import('/@/views/login/Index.vue'),
     meta: {
       title: '登录',
@@ -13,12 +13,19 @@ const basicRoute: RouteRecordRaw[] = [
   },
   {
     path: '/',
-    name: 'home',
-    component: () => import('/@/views/home/Index.vue'),
+    name: 'Home',
+    component: () => import('/@/layout/Index.vue'),
     meta: {
       title: '首页',
       hiddenMenu: true
-    }
+    },
+    children: [
+      {
+        path: '/index',
+        name: 'HomeIndex',
+        component: () => import('/@/views/home/Index.vue'),
+      }
+    ]
   }
 ]
 
