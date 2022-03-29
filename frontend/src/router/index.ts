@@ -61,7 +61,7 @@ class RouteView {
       // 3 如果没有登录，就跳转到登录页
       if (!userStore.isLoggedIn) {
         next({
-          name: 'login',
+          name: 'Login',
           query: { redirect: to.fullPath },
         })
       } else {

@@ -21,7 +21,7 @@ const basicRoute: RouteRecordRaw[] = [
     },
     children: [
       {
-        path: '/index',
+        path: '',
         name: 'HomeIndex',
         component: () => import('/@/views/home/Index.vue'),
       }

@@ -1,5 +1,4 @@
-export interface UserInfoType {
-  id: number
-  name: string
+import { UserInfo } from '/@/api/user/types'
+export interface UserInfoType extends UserInfo {
   token: string
 }

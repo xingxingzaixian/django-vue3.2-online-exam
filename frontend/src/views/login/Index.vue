@@ -1,7 +1,7 @@
 <template>
   <div class="login-main">
     <div class="logo">
-      <img src="/@/assets/images/login_svg.svg" alt="" />
+      <img alt="" border="0" />
     </div>
 
     <div class="login">
@@ -81,7 +81,7 @@ const onSubmit = () => {
 
 <style lang="less" scoped>
 .login-main {
-  @apply h-screen flex;
+  @apply h-screen flex overflow-hidden;
 
   .logo {
     @apply h-full relative;
@@ -98,6 +98,7 @@ const onSubmit = () => {
 
     img {
       @apply absolute h-3/4 w-3/4 left-1/4 top-1/4;
+      background: url('/@/assets/images/login_svg.svg') round;
     }
   }
   .login {

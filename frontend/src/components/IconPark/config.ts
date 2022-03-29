@@ -1,5 +1,5 @@
 import type { App } from 'vue'
-import { User, Lock, Unlock, ExpandRight, ExpandLeft, Home } from '@icon-park/vue-next'
+import { User, Lock, Unlock, ExpandRight, ExpandLeft, Home, Me } from '@icon-park/vue-next'
 
 export const useIconPark = (app: App) => {
   app.component('IconParkUser', User)
@@ -8,4 +8,5 @@ export const useIconPark = (app: App) => {
   app.component('IconParkExpandRight', ExpandRight)
   app.component('IconParkExpandLeft', ExpandLeft)
   app.component('IconParkHome', Home)
+  app.component('IconParkMe', Me)
 }

@@ -12,7 +12,7 @@ withDefaults(
     color?: string
   }>(),
   {
-    size: 12,
+    size: 16,
     color: '#333',
   }
 )
