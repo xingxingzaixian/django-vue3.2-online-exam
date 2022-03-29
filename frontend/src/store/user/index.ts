@@ -1,22 +1,20 @@
 import { defineStore } from 'pinia'
 import store from '../index'
-import { UserInfoType } from './types'
+import type { UserInfoStore } from './types'
 import { login, getUserInfo } from '/@/api/user'
 import type { LoginData, UserInfo } from '/@/api/user/types'
 import { useRouter } from 'vue-router'
 
 const userStore = defineStore({
   id: 'user',
-  state: (): UserInfoType => ({
-    id: -1,
-    username: '',
-    nickname: '',
-    email: '',
-    avatar: '',
-    description: '',
-    telephone: '',
-    role: '',
+  state: (): UserInfoStore => ({
     token: '',
+    info: {
+      id: -1,
+      username: '',
+      nickname: '',
+      email: ''
+    }
   }),
   getters: {
     isLoggedIn(): boolean {
@@ -34,20 +32,18 @@ const userStore = defineStore({
     },
 
     userInfo(): UserInfo {
-      if (this.username !== '') {
-        return this
+      if (this.userInfo !== null) {
+        return this.userInfo
       }
 
       const user = JSON.parse(localStorage.getItem('userInfo') || '{}')
-      this.id = user.id
-      this.username = user.username
-      this.nickname = user.nickname
-      this.email = user.email
-      this.avatar = user.avatar || 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
-      this.description = user.description
-      this.telephone = user.telephone
-      this.role = user.role
-      return this
+      if (user.id !== undefined) {
+        this.info = user
+      } else {
+        this.info = null
+      }
+
+      return this.info ? this.info : {} as UserInfo
     }
   },
   actions: {
@@ -70,28 +66,23 @@ const userStore = defineStore({
 
     logout(): void {
       this.token = ''
-      this.username = ''
-      localStorage.removeItem('token')
-      localStorage.removeItem('userInfo')
       const router = useRouter()
       if (router) {
         router.push({
           name: 'Login'
         })
       }
+
+      this.info = null
+      localStorage.removeItem('token')
+      localStorage.removeItem('userInfo')
     },
 
     async getUserInfo(): Promise<Nullable<UserInfo>> {
       try {
         const resp = await getUserInfo()
         localStorage.setItem('userInfo', JSON.stringify(resp))
-        this.id = resp.id
-        this.username = resp.username
-        this.nickname = resp.nickname
-        this.avatar = resp.avatar || 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
-        this.description = resp.description
-        this.telephone = resp.telephone
-        this.role = resp.role
+        this.info = resp
         console.log(resp)
         return resp
       } catch (err) {

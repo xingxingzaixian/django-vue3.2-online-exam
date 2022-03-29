@@ -1,4 +1,6 @@
 import { UserInfo } from '/@/api/user/types'
-export interface UserInfoType extends UserInfo {
+
+export interface UserInfoStore {
   token: string
+  info: Nullable<UserInfo>
 }

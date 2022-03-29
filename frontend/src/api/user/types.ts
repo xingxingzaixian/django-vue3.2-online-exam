@@ -8,8 +8,8 @@ export interface UserInfo {
   username: string
   email: string
   nickname: string
-  avatar: Nullable<string>
-  description: Nullable<string>
-  telephone: Nullable<string>
-  role: Nullable<string>
+  avatar?: string
+  description?: string
+  telephone?: string
+  role?: string
 }
