@@ -1,7 +1,7 @@
 <template>
   <div class="login-main">
     <div class="logo">
-      <img alt="" border="0" />
+      <img :src="loginsvg" />
     </div>
 
     <div class="login">
@@ -39,6 +39,7 @@ import IconPark from '/@/components/IconPark/Index.vue'
 import { LoginForm } from './types'
 import useUserStore from '/@/store/user'
 import { successMessage, errorMessage } from '/@/utils/message'
+import loginsvg from '/@/assets/images/login_svg.svg'
 
 const userStore = useUserStore()
 const router = useRouter()
@@ -81,7 +82,7 @@ const onSubmit = () => {
 
 <style lang="less" scoped>
 .login-main {
-  @apply h-screen flex overflow-hidden;
+  @apply h-screen flex;
 
   .logo {
     @apply h-full relative;
@@ -98,7 +99,6 @@ const onSubmit = () => {
 
     img {
       @apply absolute h-3/4 w-3/4 left-1/4 top-1/4;
-      background: url('/@/assets/images/login_svg.svg') round;
     }
   }
   .login {

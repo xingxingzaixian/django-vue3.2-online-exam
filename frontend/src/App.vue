@@ -11,6 +11,7 @@
 html,
 body,
 #app {
-  height: 100%;
+  height: 100vh;
+  overflow: hidden;
 }
 </style>

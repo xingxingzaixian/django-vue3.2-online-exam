@@ -6,8 +6,8 @@
     <div class="right">
       <el-dropdown :hide-on-click="false">
         <div class="user">
-          <el-avatar :size="30" :src="userInfo.avatar" />
-          <span>{{ userInfo.nickname }}</span>
+          <el-avatar :size="30" :src="userAvatar" />
+          <span>{{ userName }}</span>
         </div>
 
         <template #dropdown>
@@ -28,8 +28,8 @@
 <script lang="ts" setup>
 import IconPark from '/@/components/IconPark/Index.vue'
 import useUserStore from '/@/store/user'
-import { UserInfo } from '/@/api/user/types'
 import { computed } from 'vue'
+import vatar from '/@/assets/images/avatar.png'
 
 const props = defineProps<{
   collapse: boolean
@@ -41,8 +41,12 @@ const emits = defineEmits<{
 
 const userStore = useUserStore()
 
-const userInfo = computed<UserInfo>(() => {
-  return userStore.userInfo
+const userAvatar = computed<string>(() => {
+  return userStore.userInfo?.avatar || vatar
+})
+
+const userName = computed<string>(() => {
+  return userStore.userInfo?.nickname || '未登录'
 })
 
 const toggleCollapse = () => {

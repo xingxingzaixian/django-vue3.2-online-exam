@@ -3,18 +3,13 @@ import store from '../index'
 import type { UserInfoStore } from './types'
 import { login, getUserInfo } from '/@/api/user'
 import type { LoginData, UserInfo } from '/@/api/user/types'
-import { useRouter } from 'vue-router'
+import router from '/@/router'
 
 const userStore = defineStore({
   id: 'user',
   state: (): UserInfoStore => ({
     token: '',
-    info: {
-      id: -1,
-      username: '',
-      nickname: '',
-      email: ''
-    }
+    info: null
   }),
   getters: {
     isLoggedIn(): boolean {
@@ -31,9 +26,9 @@ const userStore = defineStore({
       return this.token
     },
 
-    userInfo(): UserInfo {
-      if (this.userInfo !== null) {
-        return this.userInfo
+    userInfo(): Nullable<UserInfo> {
+      if (this.info !== null) {
+        return this.info
       }
 
       const user = JSON.parse(localStorage.getItem('userInfo') || '{}')
@@ -43,7 +38,7 @@ const userStore = defineStore({
         this.info = null
       }
 
-      return this.info ? this.info : {} as UserInfo
+      return this.info ? this.info : null
     }
   },
   actions: {
@@ -66,7 +61,8 @@ const userStore = defineStore({
 
     logout(): void {
       this.token = ''
-      const router = useRouter()
+      localStorage.removeItem('token')
+
       if (router) {
         router.push({
           name: 'Login'
@@ -74,7 +70,6 @@ const userStore = defineStore({
       }
 
       this.info = null
-      localStorage.removeItem('token')
       localStorage.removeItem('userInfo')
     },
 
@@ -84,6 +79,7 @@ const userStore = defineStore({
         localStorage.setItem('userInfo', JSON.stringify(resp))
         this.info = resp
         console.log(resp)
+        console.log(this.info)
         return resp
       } catch (err) {
         console.log(err)
