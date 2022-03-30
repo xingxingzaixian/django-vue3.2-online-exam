@@ -1,40 +1,27 @@
 <template>
-  <el-menu default-active="2" class="el-menu-vertical" :collapse="collapse">
-    <el-menu-item class="title">
-      <icon-park name="home" :size="24" />
-      <template #title>首页</template>
-    </el-menu-item>
-    <el-sub-menu index="1">
-      <template #title>
-        <icon-park name="home" />
-        <span>Navigator One</span>
-      </template>
-      <el-menu-item-group>
-        <template #title><span>Group One</span></template>
-        <el-menu-item index="1-1">item one</el-menu-item>
-        <el-menu-item index="1-2">item two</el-menu-item>
-      </el-menu-item-group>
-      <el-menu-item-group title="Group Two">
-        <el-menu-item index="1-3">item three</el-menu-item>
-      </el-menu-item-group>
-      <el-sub-menu index="1-4">
-        <template #title><span>item four</span></template>
-        <el-menu-item index="1-4-1">item one</el-menu-item>
+  <div class="sidebar">
+    <h1 class="title">首页</h1>
+    <el-menu default-active="2" :collapse="collapse" class="el-menu-vertical">
+      <el-menu-item>
+        <icon-park name="user" />
+        <template #title>用户中心</template>
+      </el-menu-item>
+      <el-sub-menu index="1">
+        <template #title>
+          <icon-park name="user" />
+          <span>考试管理</span>
+        </template>
+        <el-menu-item index="1-1">
+          <icon-park name="home" />
+          <template #title>考试列表</template>
+        </el-menu-item>
+        <el-menu-item index="1-2">
+          <icon-park name="home" />
+          <template #title>我的考试</template>
+        </el-menu-item>
       </el-sub-menu>
-    </el-sub-menu>
-    <el-menu-item index="2">
-      <icon-park name="home" />
-      <template #title>Navigator Two</template>
-    </el-menu-item>
-    <el-menu-item index="3" disabled>
-      <icon-park name="home" />
-      <template #title>Navigator Three</template>
-    </el-menu-item>
-    <el-menu-item index="4">
-      <icon-park name="home" />
-      <template #title>Navigator Four</template>
-    </el-menu-item>
-  </el-menu>
+    </el-menu>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -46,12 +33,16 @@ defineProps<{
 </script>
 
 <style lang="less" scoped>
-.el-menu-vertical {
-  @apply h-screen;
+.sidebar {
+  @apply flex flex-col;
 
   .title {
     @apply text-xl;
     height: @headerBarHeight;
+  }
+
+  .el-menu.el-menu-vertical {
+    @apply border-r-0;
   }
 }
 

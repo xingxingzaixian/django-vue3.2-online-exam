@@ -10,7 +10,8 @@
 <style lang="less">
 html,
 body,
-#app {
+#app,
+.el-container {
   height: 100vh;
   overflow: hidden;
 }

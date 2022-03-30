@@ -1,4 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router'
+import Layout from '/@/layout/Index.vue'
 
 const basicRoute: RouteRecordRaw[] = [
   {
@@ -14,7 +15,7 @@ const basicRoute: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('/@/layout/Index.vue'),
+    component: Layout,
     meta: {
       title: '首页',
       hiddenMenu: true

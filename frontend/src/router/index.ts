@@ -65,6 +65,11 @@ class RouteView {
           query: { redirect: to.fullPath },
         })
       } else {
+        // 4. 如果用户信息不存在，就获取一次用户信息
+        if (!userStore.hasUserInfo) {
+          userStore.getUserInfo()
+        }
+
         next()
       }
     })

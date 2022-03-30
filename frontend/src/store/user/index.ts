@@ -19,6 +19,10 @@ const userStore = defineStore({
       return this.token !== ''
     },
 
+    hasUserInfo(): boolean {
+      return this.userInfo !== null
+    },
+
     userToken(): string {
       if (this.token === '') {
         this.token = localStorage.getItem('token') || ''
