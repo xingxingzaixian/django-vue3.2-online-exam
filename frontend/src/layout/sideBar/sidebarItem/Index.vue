@@ -1,23 +1,47 @@
 <template>
-  <el-sub-menu v-if="menu.children && menu.children.length > 0" :index="menu.path">
+  <el-sub-menu v-if="route.children && route.children.length > 0" :index="route.path">
     <template #title>
-      <icon-park :name="menu.icon" />
-      <span>{{ menu.title }}</span>
+      <icon-park :name="route.icon" :color="(settingStore.cssVars.menuTextColor as string)" />
+      <span>{{ route.title }}</span>
     </template>
-    <sidebar-item v-for="item in menu.children" :menu="item" :key="item.path" />
+    <sidebarItem v-for="item in route.children" :route="item" />
   </el-sub-menu>
-  <el-menu-item v-else :index="menu.path">
-    <icon-park :name="menu.icon" />
-    <span>{{ menu.title }}</span>
+  <el-menu-item v-else :index="route.path">
+    <icon-park :name="route.icon" :color="(settingStore.cssVars.menuTextColor as string)" />
+    <span>{{ route.title }}</span>
   </el-menu-item>
 </template>
+
+<script lang="ts">
+export default {
+  name: 'SidebarItem',
+}
+</script>
 
 <script lang="ts" setup>
 import IconPark from '/@/components/IconPark/Index.vue'
 import { MenuItemType } from '../types'
+import useSettingStore from '/@/store/setting'
+
+const settingStore = useSettingStore()
 
 defineProps<{
-  menu: MenuItemType
+  route: MenuItemType
 }>()
 </script>
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.el-sub-menu__title,
+.el-menu-item {
+  span {
+    @apply ml-1 text-base;
+  }
+}
+
+.el-menu-item:hover {
+  background-color: @menuHoverBgColor;
+}
+
+:deep(.el-sub-menu__title:hover) {
+  background-color: @menuHoverBgColor;
+}
+</style>

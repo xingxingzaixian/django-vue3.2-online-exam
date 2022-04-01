@@ -13,7 +13,7 @@ const managerRoute: AppRouteRecordRaw = {
     {
       path: '/manage/exam',
       name: 'ManageExam',
-      component: import('/@/views/manage/exam/Index.vue'),
+      component: () => import('/@/views/manage/exam/Index.vue'),
       meta: {
         title: '考试管理',
         icon: 'exam'
@@ -22,22 +22,11 @@ const managerRoute: AppRouteRecordRaw = {
     {
       path: '/manage/question',
       name: 'ManageQuestion',
-      component: import('/@/views/manage/question/Index.vue'),
+      component: () => import('/@/views/manage/question/Index.vue'),
       meta: {
         title: '题目管理',
         icon: 'question'
-      },
-      children: [
-        {
-          path: '/manage/question/add',
-          name: 'ManageQuestionAdd',
-          component: import('/@/views/manage/question/Index.vue'),
-          meta: {
-            title: '添加题目',
-            icon: 'question'
-          }
-        }
-      ]
+      }
     }
   ]
 }
