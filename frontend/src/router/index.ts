@@ -1,6 +1,8 @@
-import type { RouteRecordRaw } from 'vue-router'
-import { Router, createRouter, createWebHashHistory, RouterHistory } from 'vue-router'
+import type { Router, RouterHistory } from 'vue-router'
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 import useUserStore from '../store/user'
+import type { AppRouteRecordRaw } from './types'
+
 class RouteView {
   // 路由对象
   private router: Router | unknown = undefined
@@ -13,16 +15,20 @@ class RouteView {
 
   // 根据环境变量中的配置生成路由模式
   static createHistory = (): RouterHistory => {
-    return createWebHashHistory()
+    if (import.meta.env.VITE_APP_ROUTER_TYPE === 'hash') {
+      return createWebHashHistory()
+    } else {
+      return createWebHistory()
+    }
   }
 
   // 动态获取 modules 目录下的所有 .ts 文件生成基础路由
-  static createBasicRoutes = (): RouteRecordRaw[] => {
+  static createBasicRoutes = (): AppRouteRecordRaw[] => {
     const moduleFiles: Recordable<{ [key: string]: any }> = import.meta.globEager('./modules/**/*.ts')
-    const routeModuleList: RouteRecordRaw[] = []
+    const routeModuleList: AppRouteRecordRaw[] = []
     Object.keys(moduleFiles).forEach((key) => {
       const mod: { [key: string]: any } = moduleFiles[key].default || {}
-      const modList: RouteRecordRaw[] = Array.isArray(mod) ? [...mod] : [mod]
+      const modList: AppRouteRecordRaw[] = Array.isArray(mod) ? [...mod] : [mod]
       routeModuleList.push(...modList)
     })
 

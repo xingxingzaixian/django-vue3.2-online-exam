@@ -1,7 +1,7 @@
-import type { RouteRecordRaw } from 'vue-router'
+import type { AppRouteRecordRaw } from '/@/router/types'
 import Layout from '/@/layout/Index.vue'
 
-const basicRoute: RouteRecordRaw[] = [
+const basicRoute: AppRouteRecordRaw[] = [
   {
     path: '/login',
     name: 'Login',
@@ -9,7 +9,7 @@ const basicRoute: RouteRecordRaw[] = [
     meta: {
       title: '登录',
       noAuth: true,
-      hiddenMenu: true
+      hideInMenu: true
     },
   },
   {
@@ -18,13 +18,16 @@ const basicRoute: RouteRecordRaw[] = [
     component: Layout,
     meta: {
       title: '首页',
-      hiddenMenu: true
+      hideInMenu: true
     },
     children: [
       {
-        path: '',
+        path: '/home',
         name: 'HomeIndex',
         component: () => import('/@/views/home/Index.vue'),
+        meta: {
+          title: '首页',
+        }
       }
     ]
   }

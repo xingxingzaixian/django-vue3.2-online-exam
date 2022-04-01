@@ -1,35 +1,31 @@
 <template>
   <div class="sidebar">
     <h1 class="title">首页</h1>
-    <el-menu default-active="2" :collapse="collapse" class="el-menu-vertical">
-      <el-menu-item>
-        <icon-park name="user" />
-        <template #title>用户中心</template>
-      </el-menu-item>
-      <el-sub-menu index="1">
-        <template #title>
-          <icon-park name="user" />
-          <span>考试管理</span>
-        </template>
-        <el-menu-item index="1-1">
-          <icon-park name="home" />
-          <template #title>考试列表</template>
-        </el-menu-item>
-        <el-menu-item index="1-2">
-          <icon-park name="home" />
-          <template #title>我的考试</template>
-        </el-menu-item>
-      </el-sub-menu>
-    </el-menu>
+    <el-scrollbar>
+      <el-menu default-active="2" :collapse="collapse" class="el-menu-vertical">
+        <sidebar-item v-for="menu in routes" :menu="menu" :key="menu.path"></sidebar-item>
+      </el-menu>
+    </el-scrollbar>
   </div>
 </template>
 
 <script lang="ts" setup>
-import IconPark from '/@/components/IconPark/Index.vue'
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+import SidebarItem from './sidebarItem/Index.vue'
+import { generateMenus } from '../sideBar/menus'
+import type { AppRouteRecordRaw } from '/@/router/types'
+import { MenuItemType } from './types'
 
 defineProps<{
   collapse: boolean
 }>()
+
+const router = useRouter()
+
+const routes = computed<MenuItemType[]>(() => {
+  return generateMenus(router.getRoutes() as unknown as AppRouteRecordRaw[])
+})
 </script>
 
 <style lang="less" scoped>
@@ -39,6 +35,10 @@ defineProps<{
   .title {
     @apply text-xl;
     height: @headerBarHeight;
+  }
+
+  .el-scrollbar {
+    height: calc(100vh - @headerBarHeight);
   }
 
   .el-menu.el-menu-vertical {

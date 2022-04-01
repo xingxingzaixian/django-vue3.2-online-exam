@@ -1,9 +1,9 @@
 import { createApp } from 'vue'
-import App from './App.vue'
 import router from './router'
 import store from './store'
 import { useIconPark } from './components/IconPark/config'
 import './styles/index.less'
+import App from './App.vue'
 
 const app = createApp(App)
 
