@@ -11,10 +11,6 @@
         <el-main>
           <app-main />
         </el-main>
-
-        <el-footer>
-          <footer-bar />
-        </el-footer>
       </el-container>
     </el-container>
   </div>
@@ -24,7 +20,6 @@
 import { ref } from 'vue'
 import SideBar from './sideBar/Index.vue'
 import HeaderBar from './headerBar/Index.vue'
-import FooterBar from './footerBar/Index.vue'
 import AppMain from './appMain/Index.vue'
 
 const isCollapse = ref<boolean>(false)
