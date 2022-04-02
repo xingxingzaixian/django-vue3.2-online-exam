@@ -1,6 +1,9 @@
 <template>
   <div class="sidebar">
-    <h1 class="title">首页</h1>
+    <div class="title" @click="goHome">
+      <img src="/logo.svg" alt="" width="32" height="32" />
+      <span v-show="!collapse">首页</span>
+    </div>
     <el-scrollbar>
       <el-menu
         :default-active="route.fullPath"
@@ -11,7 +14,7 @@
         active-text-color="@menuActiveTextColor"
         class="el-menu-vertical"
       >
-        <sidebar-item v-for="menu in routes" :route="menu" :key="menu.path"></sidebar-item>
+        <menu-item v-for="menu in routes" :route="menu" :key="menu.path"></menu-item>
       </el-menu>
     </el-scrollbar>
   </div>
@@ -20,8 +23,8 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import SidebarItem from './sidebarItem/Index.vue'
-import { generateMenus } from '../sideBar/menus'
+import MenuItem from './MenuItem.vue'
+import { generateMenus } from './menus'
 import type { AppRouteRecordRaw } from '/@/router/types'
 import { MenuItemType } from './types'
 
@@ -35,6 +38,10 @@ const route = useRoute()
 const routes = computed<MenuItemType[]>(() => {
   return generateMenus(router.getRoutes() as unknown as AppRouteRecordRaw[])
 })
+
+const goHome = () => {
+  router.push({ name: 'Home' })
+}
 </script>
 
 <style lang="less" scoped>
@@ -44,9 +51,12 @@ const routes = computed<MenuItemType[]>(() => {
   color: @menuTextColor;
 
   .title {
-    @apply text-2xl text-center;
+    @apply flex items-center justify-center;
     height: @headerBarHeight;
-    line-height: @headerBarHeight;
+
+    span {
+      @apply text-xl ml-1;
+    }
   }
 
   .el-scrollbar {

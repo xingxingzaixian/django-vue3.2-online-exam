@@ -2,6 +2,7 @@
   <div class="header">
     <div class="left">
       <icon-park :name="collapse ? 'expand-left' : 'expand-right'" :size="24" @click="toggleCollapse" />
+      <bread-crumb :separator="'/'" />
     </div>
     <div class="right">
       <el-dropdown :hide-on-click="false">
@@ -26,10 +27,11 @@
 </template>
 
 <script lang="ts" setup>
-import IconPark from '/@/components/IconPark/Index.vue'
+import IconPark from '/@/components/IconPark/IconPark.vue'
 import useUserStore from '/@/store/user'
 import { computed } from 'vue'
 import vatar from '/@/assets/images/avatar.png'
+import BreadCrumb from './breadcrumb/BreadCrumb.vue'
 
 const props = defineProps<{
   collapse: boolean

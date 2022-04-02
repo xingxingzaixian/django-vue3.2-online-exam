@@ -1,5 +1,17 @@
 import type { App } from 'vue'
-import { User, Lock, Unlock, ExpandRight, ExpandLeft, Home, Me, Agreement } from '@icon-park/vue-next'
+import {
+  User,
+  Lock,
+  Unlock,
+  ExpandRight,
+  ExpandLeft,
+  Home,
+  Me,
+  Agreement,
+  Brain,
+  ListView,
+  Editor
+} from '@icon-park/vue-next'
 
 export const useIconPark = (app: App) => {
   app.component('IconParkUser', User)
@@ -10,4 +22,7 @@ export const useIconPark = (app: App) => {
   app.component('IconParkHome', Home)
   app.component('IconParkMe', Me)
   app.component('IconParkAgreement', Agreement)
+  app.component('IconParkBrain', Brain)
+  app.component('IconParkListView', ListView)
+  app.component('IconParkEditor', Editor)
 }

@@ -35,7 +35,7 @@
 import { reactive, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import type { FormInstance } from 'element-plus'
-import IconPark from '/@/components/IconPark/Index.vue'
+import IconPark from '/@/components/IconPark/IconPark.vue'
 import { LoginForm } from './types'
 import useUserStore from '/@/store/user'
 import { successMessage, errorMessage } from '/@/utils/message'

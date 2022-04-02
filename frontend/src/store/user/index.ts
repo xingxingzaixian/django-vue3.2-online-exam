@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import store from '../index'
 import type { UserInfoStore } from './types'
-import { login, getUserInfo } from '/@/api/user'
+import { loginApi, getUserInfoApi } from '/@/api/user'
 import type { LoginData, UserInfo } from '/@/api/user/types'
 import router from '/@/router'
 
@@ -53,7 +53,7 @@ const userStore = defineStore({
 
     async login(data: LoginData): Promise<Nullable<UserInfo>> {
       try {
-        const resp = await login(data)
+        const resp = await loginApi(data)
         this.setToken(resp)
 
         return this.getUserInfo()
@@ -79,11 +79,9 @@ const userStore = defineStore({
 
     async getUserInfo(): Promise<Nullable<UserInfo>> {
       try {
-        const resp = await getUserInfo()
+        const resp = await getUserInfoApi()
         localStorage.setItem('userInfo', JSON.stringify(resp))
         this.info = resp
-        console.log(resp)
-        console.log(this.info)
         return resp
       } catch (err) {
         console.log(err)

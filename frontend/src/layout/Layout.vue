@@ -18,9 +18,9 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import SideBar from './sideBar/Index.vue'
-import HeaderBar from './headerBar/Index.vue'
-import AppMain from './appMain/Index.vue'
+import SideBar from './sideBar/SideBar.vue'
+import HeaderBar from './headerBar/HeaderBar.vue'
+import AppMain from './appMain/AppMain.vue'
 
 const isCollapse = ref<boolean>(false)
 </script>

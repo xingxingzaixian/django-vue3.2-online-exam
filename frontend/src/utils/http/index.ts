@@ -1,5 +1,4 @@
 import useUserStore from '/@/store/user'
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Axios from 'axios'
 import type { AxiosRequestConfig, AxiosInstance, AxiosResponse, AxiosError } from 'axios'
 import { defaultConfig } from './types'
@@ -51,9 +50,11 @@ class AxiosHttp {
 
   // 异常请求处理
   static errorHandler(status: number, message?: string): void {
+    const userStore = useUserStore()
     switch (status) {
       case 401: {
-        // 未登录
+        // 未登录或者登录过期，清除登录信息
+        userStore.logout()
         break
       }
       case 403: {
