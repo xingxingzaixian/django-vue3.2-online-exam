@@ -11,14 +11,14 @@
           <el-form-item prop="username">
             <el-input v-model="formData.username" clearable placeholder="请输入账户名">
               <template #prefix>
-                <icon-park name="user" />
+                <icon-park icon="user" />
               </template>
             </el-input>
           </el-form-item>
           <el-form-item prop="password">
             <el-input v-model="formData.password" type="password" show-password placeholder="请输入密码">
               <template #prefix>
-                <icon-park name="lock" />
+                <icon-park icon="lock" />
               </template>
             </el-input>
           </el-form-item>

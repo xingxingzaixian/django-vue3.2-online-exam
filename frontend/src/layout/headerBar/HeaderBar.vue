@@ -1,10 +1,11 @@
 <template>
   <div class="header">
     <div class="left">
-      <icon-park :name="collapse ? 'expand-left' : 'expand-right'" :size="24" @click="toggleCollapse" />
+      <icon-park :icon="collapse ? 'indent-right' : 'indent-left'" :size="24" @click="toggleCollapse" />
       <bread-crumb :separator="'/'" />
     </div>
     <div class="right">
+      <notice />
       <el-dropdown :hide-on-click="false">
         <div class="user">
           <el-avatar :size="30" :src="userAvatar" />
@@ -14,7 +15,7 @@
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item>
-              <icon-park name="me" />
+              <icon-park icon="me" />
               用户中心
             </el-dropdown-item>
             <el-dropdown-item>用户中心</el-dropdown-item>
@@ -32,6 +33,7 @@ import useUserStore from '/@/store/user'
 import { computed } from 'vue'
 import vatar from '/@/assets/images/avatar.png'
 import BreadCrumb from './breadcrumb/BreadCrumb.vue'
+import Notice from './notice/Notice.vue'
 
 const props = defineProps<{
   collapse: boolean

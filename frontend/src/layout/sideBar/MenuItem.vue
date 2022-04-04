@@ -1,13 +1,13 @@
 <template>
   <el-sub-menu v-if="route.children && route.children.length > 0" :index="route.path">
     <template #title>
-      <icon-park :name="route.icon" :color="(settingStore.cssVars.menuTextColor as string)" />
+      <icon-park :icon="route.icon" :color="(settingStore.cssVars.menuTextColor as string)" />
       <span>{{ route.title }}</span>
     </template>
     <menu-item v-for="item in route.children" :route="item" />
   </el-sub-menu>
   <el-menu-item v-else :index="route.path">
-    <icon-park :name="route.icon" :color="(settingStore.cssVars.menuTextColor as string)" />
+    <icon-park :icon="route.icon" :color="(settingStore.cssVars.menuTextColor as string)" />
     <span>{{ route.title }}</span>
   </el-menu-item>
 </template>

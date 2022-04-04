@@ -9,7 +9,8 @@ const basicRoute: AppRouteRecordRaw[] = [
     meta: {
       title: '登录',
       noAuth: true,
-      hideInMenu: true
+      hideInMenu: true,
+      noTag: true
     },
   },
   {
@@ -20,12 +21,12 @@ const basicRoute: AppRouteRecordRaw[] = [
       title: '首页',
       hideInMenu: true
     },
-    redirect: '/home',
+    redirect: '/welcome',
     children: [
       {
-        path: '/home',
-        name: 'HomeIndex',
-        component: () => import('/@/views/home/Home.vue'),
+        path: '/welcome',
+        name: 'Welcome',
+        component: () => import('/@/views/home/Home.vue')
       }
     ]
   }

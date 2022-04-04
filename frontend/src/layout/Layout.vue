@@ -32,9 +32,5 @@ const isCollapse = ref<boolean>(false)
   .el-side {
     @apply h-full;
   }
-
-  .el-main {
-    @apply -z-10;
-  }
 }
 </style>

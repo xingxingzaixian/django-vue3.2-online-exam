@@ -2,27 +2,35 @@ import type { App } from 'vue'
 import {
   User,
   Lock,
-  Unlock,
-  ExpandRight,
-  ExpandLeft,
   Home,
   Me,
   Agreement,
   Brain,
   ListView,
-  Editor
+  Editor,
+  DropDownList,
+  CloseSmall,
+  Refresh,
+  Setting,
+  IndentLeft,
+  IndentRight,
+  Remind
 } from '@icon-park/vue-next'
 
 export const useIconPark = (app: App) => {
   app.component('IconParkUser', User)
   app.component('IconParkLock', Lock)
-  app.component('IconParkUnlock', Unlock)
-  app.component('IconParkExpandRight', ExpandRight)
-  app.component('IconParkExpandLeft', ExpandLeft)
   app.component('IconParkHome', Home)
   app.component('IconParkMe', Me)
   app.component('IconParkAgreement', Agreement)
   app.component('IconParkBrain', Brain)
   app.component('IconParkListView', ListView)
   app.component('IconParkEditor', Editor)
+  app.component('IconParkDropDownList', DropDownList)
+  app.component('IconParkCloseSmall', CloseSmall)
+  app.component('IconParkRefresh', Refresh)
+  app.component('IconParkSetting', Setting)
+  app.component('IconParkIndentLeft', IndentLeft)
+  app.component('IconParkIndentRight', IndentRight)
+  app.component('IconParkRemind', Remind)
 }
