@@ -7,3 +7,5 @@ from question.serializers import CategorySerializer as Serializer
 class CategoryViewset(ModelViewSet):
     queryset = Model.objects.all().order_by('-id')
     serializer_class = Serializer
+
+    

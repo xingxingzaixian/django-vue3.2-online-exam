@@ -7,7 +7,8 @@ const userRoute: AppRouteRecordRaw = {
   component: Layout,
   meta: {
     title: '个人中心',
-    icon: 'me'
+    icon: 'me',
+    order: 1
   },
   redirect: '/me/info',
   children: [

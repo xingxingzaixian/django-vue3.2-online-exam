@@ -44,12 +44,17 @@ export const generateMenus = (routes: AppRouteRecordRaw[]): MenuItemType[] => {
     }
 
     menus.push({
-      title: route.meta.title,
+      title: route.meta.title as string,
       icon: route.meta.icon || '',
       path: route.path,
+      order: route.meta.order || 1000,
       children: route.children && route.children.length > 0 ? generateMenus(route.children) : [],
     })
   })
 
+  // 按照 order 排序
+  menus.sort((a, b) => {
+    return a.order - b.order
+  })
   return menus
 }
