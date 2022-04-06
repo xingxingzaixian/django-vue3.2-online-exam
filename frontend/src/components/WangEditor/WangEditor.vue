@@ -1,5 +1,5 @@
 <template>
-  <div class="editor-main">
+  <div class="editor-main" v-bind="$attrs">
     <div ref="toolbarEl" class="toolbar"></div>
     <div ref="editorEl" class="editor"></div>
   </div>
@@ -10,6 +10,16 @@ import { ref, onMounted } from 'vue'
 import '@wangeditor/editor/dist/css/style.css'
 import { createEditor, createToolbar, IEditorConfig, IDomEditor } from '@wangeditor/editor'
 
+defineProps<{
+  value: string
+  text?: string
+}>()
+
+const emits = defineEmits<{
+  (e: 'update:value', value: string): void
+  (e: 'update:text', text: string): void
+}>()
+
 const toolbarEl = ref<Element | null>(null)
 const editorEl = ref<Element | null>(null)
 
@@ -19,6 +29,9 @@ editorConfig.onChange = (editor: IDomEditor) => {
   // 当编辑器选区、内容变化时，即触发
   console.log('content', editor.children)
   console.log('html', editor.getHtml())
+  console.log('text', editor.getText())
+  emits('update:value', editor.getHtml())
+  emits('update:text', editor.getText())
 }
 
 onMounted(() => {
@@ -40,7 +53,7 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .editor-main {
-  border: 1px solid black;
+  border: 1px solid #ccc;
 
   .toolbar {
     border-bottom: 1px solid #ccc;
