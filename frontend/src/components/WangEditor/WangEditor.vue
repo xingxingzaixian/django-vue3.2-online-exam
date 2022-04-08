@@ -1,62 +1,76 @@
 <template>
   <div class="editor-main" v-bind="$attrs">
-    <div ref="toolbarEl" class="toolbar"></div>
-    <div ref="editorEl" class="editor"></div>
+    <Toolbar
+      editorId="editor"
+      style="border-bottom: 1px solid #ccc"
+      :editor="editorRef"
+      :defaultConfig="toolbarConfig"
+      :mode="mode"
+    />
+    <Editor
+      editorId="editor"
+      v-model="valueHtml"
+      :defaultConfig="editorConfig"
+      :mode="mode"
+      @onCreated="handleCreated"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
+import { ref, shallowRef, onBeforeUnmount, watch } from 'vue'
 import '@wangeditor/editor/dist/css/style.css'
-import { createEditor, createToolbar, IEditorConfig, IDomEditor } from '@wangeditor/editor'
+import type { IToolbarConfig, IEditorConfig, IDomEditor } from '@wangeditor/editor'
+import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 
-defineProps<{
-  value: string
-  text?: string
+const props = defineProps<{
+  mode: 'default' | 'simple'
+  html: string
 }>()
 
 const emits = defineEmits<{
-  (e: 'update:value', value: string): void
-  (e: 'update:text', text: string): void
+  (e: 'update:html', html: string): void
 }>()
 
-const toolbarEl = ref<Element | null>(null)
-const editorEl = ref<Element | null>(null)
+const editorRef = shallowRef<IDomEditor>()
 
-const editorConfig: Partial<IEditorConfig> = {}
-editorConfig.placeholder = '请输入内容'
-editorConfig.onChange = (editor: IDomEditor) => {
-  // 当编辑器选区、内容变化时，即触发
-  console.log('content', editor.children)
-  console.log('html', editor.getHtml())
-  console.log('text', editor.getText())
-  emits('update:value', editor.getHtml())
-  emits('update:text', editor.getText())
+const valueHtml = ref<string>(props.html)
+
+const editorConfig: Partial<IEditorConfig> = { placeholder: '请输入内容' }
+const toolbarConfig: Partial<IToolbarConfig> = {}
+
+const handleCreated = (editor: IDomEditor) => {
+  console.log('handleCreated', editor)
+  editorRef.value = editor // 记录 editor 实例，重要！
 }
 
-onMounted(() => {
-  // 创建编辑器
-  const editor = createEditor({
-    selector: editorEl.value!,
-    config: editorConfig,
-    mode: 'simple', // 或 'simple' 参考下文
-  })
-
-  // 创建工具栏
-  createToolbar({
-    editor,
-    selector: toolbarEl.value!,
-    mode: 'simple', // 或 'simple' 参考下文
-  })
+onBeforeUnmount(() => {
+  const editor = editorRef.value
+  if (editor == null) return
+  editor.destroy()
 })
+
+watch(
+  () => props.html,
+  (val) => {
+    console.log('prop html changed', val)
+    if (valueHtml.value === val) return
+    valueHtml.value = val
+  }
+)
+
+watch(
+  () => valueHtml.value,
+  (val) => {
+    console.log('html changed', val)
+    if (props.html === val) return
+    emits('update:html', val)
+  }
+)
 </script>
 
 <style lang="less" scoped>
 .editor-main {
   border: 1px solid #ccc;
-
-  .toolbar {
-    border-bottom: 1px solid #ccc;
-  }
 }
 </style>

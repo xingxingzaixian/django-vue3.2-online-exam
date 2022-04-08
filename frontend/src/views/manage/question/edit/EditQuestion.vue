@@ -10,10 +10,10 @@
       <div class="question">
         <el-form :model="form" label-width="50px" v-show="stepActive === 0">
           <el-form-item label="内容">
-            <wang-editor v-model:value="form.content" />
+            <wang-editor v-model:html="form.content" mode="simple" style="min-width: 800px" />
           </el-form-item>
           <el-form-item label="描述">
-            <wang-editor v-model:value="form.description" />
+            <wang-editor v-model:html="form.description" mode="simple" style="min-width: 800px" />
           </el-form-item>
         </el-form>
         <el-form :model="form" label-width="50px" v-show="stepActive === 1">
@@ -76,6 +76,8 @@ import {
   getQuestionLevelListApi,
   getQuestionOptionListApi,
   createQuestionApi,
+  getQuestionApi,
+  updateQuestionApi,
 } from '/@/api/question'
 import {
   QuestionCreateItem,
@@ -97,6 +99,7 @@ const form = reactive<QuestionCreateItem>({
   category_tag: '',
 })
 const stepActive = ref<number>(0)
+const isEdit = ref<boolean>(route.params && route.params.id ? true : false)
 const categoryList = reactive<QuestionCategoryListItem[]>([])
 const levelList = reactive<QuestionLevelListItem[]>([])
 const typeList = reactive<QuestionTypeListItem[]>([])
@@ -151,10 +154,26 @@ const questionAnswers = computed(() => {
 const onSubmit = async () => {
   if (stepActive.value === 2) {
     console.log(form)
-    await createQuestionApi(form)
+    if (isEdit.value) {
+      await updateQuestionApi(Number(route.params.id), form)
+    } else {
+      await createQuestionApi(form)
+    }
   } else {
     stepActive.value += 1
   }
+}
+
+if (isEdit.value) {
+  getQuestionApi(Number(route.params.id)).then((res) => {
+    form.content = res.content
+    form.description = res.description
+    form.option_ids = res.option_ids
+    form.anser_ids = res.anser_ids
+    form.level_tag = res.level_tag
+    form.type_tag = res.type_tag
+    form.category_tag = res.category_tag
+  })
 }
 </script>
 

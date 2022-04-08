@@ -15,6 +15,12 @@ export const getQuestionListApi = async (): Promise<QuestionListItem[]> => {
   })
 }
 
+// 获取题目信息
+export const getQuestionApi = async (id: number): Promise<QuestionCreateItem> => {
+  return apiHttp.get<QuestionCreateItem>({
+    url: `/api/question/question/${id}/`
+  })
+}
 // 删除题目
 export const deleteQuestionApi = async (id: number): Promise<void> => {
   return apiHttp.delete<void>({
@@ -54,6 +60,14 @@ export const getQuestionOptionListApi = async () : Promise<QuestionOptionItem[]>
 export const createQuestionApi = async (data: QuestionCreateItem) : Promise<void> => {
   return apiHttp.post({
     url: '/api/question/question/',
+    data
+  })
+}
+
+// 更新题目
+export const updateQuestionApi = async (id: number, data: QuestionCreateItem) : Promise<void> => {
+  return apiHttp.put({
+    url: `/api/question/question/${id}/`,
     data
   })
 }

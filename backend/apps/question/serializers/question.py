@@ -7,12 +7,11 @@ from question.models import (
 
 
 class QuestionCreateSerializer(serializers.ModelSerializer):
-    
     class Meta:
         model = TblQuestion
-        exclude = ['id', 'create_time', 'update_time', 'creator']
-        
-        
+        fields = '__all__'
+        read_only_fields = ['id', 'create_time', 'update_time', 'creator']
+
 
 class QuestionListSerializer(serializers.ModelSerializer):
     creator = serializers.StringRelatedField(source='creator.nickname')
