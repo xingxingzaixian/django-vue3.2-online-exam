@@ -4,9 +4,14 @@
     <div class="main-content">
       <router-view v-slot="{ Component, route }" v-if="isReloadRoute">
         <keep-alive v-if="route.meta.keepAlive">
-          <component :is="Component" class="animate__animated animate__lightSpeedInRight" :key="route.path" />
+          <component :is="Component" class="animate__animated animate__fadeInRight animate__faster" :key="route.path" />
         </keep-alive>
-        <component v-else :is="Component" class="animate__animated animate__lightSpeedInRight" :key="route.path" />
+        <component
+          v-else
+          :is="Component"
+          class="animate__animated animate__fadeInRight animate__faster"
+          :key="route.path"
+        />
       </router-view>
     </div>
   </div>

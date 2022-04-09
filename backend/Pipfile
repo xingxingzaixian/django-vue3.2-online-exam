@@ -16,7 +16,7 @@ loguru = "*"
 [dev-packages]
 
 [requires]
-python_version = "3.8"
+python_version = "3.8.11"
 
 [scripts]
 dev = "python manage.py runserver 0.0.0.0:9527"
