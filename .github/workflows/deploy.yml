@@ -1,0 +1,45 @@
+name: 自动化部署
+
+on:
+  push:
+    branches: [ preview ]
+  pull_request:
+    branches: [ preview ]
+  workflow_dispatch:
+
+jobs:
+  deploy_front:
+    name: 构建前端项目
+    runs-on: ubuntu-latest
+    steps:
+      - name: clone代码
+        uses: actions/checkout@v3
+
+      - name: 设置node版本
+        uses: actions/setup-node@v3
+        with:
+          node-version: '17'
+
+      - name: 缓存node_modules
+        uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: 安装依赖
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: yarn --frozen-lockfile
+
+      - name: 执行构建
+        run: yarn build
+
+      - name: 部署到GitHub Pages
+        uses: crazy-max/ghaction-github-pages@v2
+        with:
+          target_branch: gh_pages
+          build_dir: ./dist
+ 
