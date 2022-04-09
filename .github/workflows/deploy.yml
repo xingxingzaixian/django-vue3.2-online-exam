@@ -32,14 +32,18 @@ jobs:
 
       - name: 安装依赖
         if: steps.yarn-cache.outputs.cache-hit != 'true'
-        run: yarn --frozen-lockfile
+        run: |
+          cd frontend
+          yarn --frozen-lockfile
 
       - name: 执行构建
-        run: yarn build
+        run: |
+          cd frontend
+          yarn build
 
       - name: 部署到GitHub Pages
         uses: crazy-max/ghaction-github-pages@v2
         with:
           target_branch: gh_pages
-          build_dir: ./dist
+          build_dir: ./frontend/dist
  
