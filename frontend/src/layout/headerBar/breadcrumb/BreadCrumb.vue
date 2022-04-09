@@ -4,12 +4,13 @@
       <el-breadcrumb-item
         v-if="index < breadCrumbs.length - 1"
         :to="{ path: item.path }"
-        v-motion-slide-right
+        class="animate__animated animate__lightSpeedInRight"
         :key="item.path"
       >
         {{ item.title }}
       </el-breadcrumb-item>
-      <el-breadcrumb-item v-else v-motion-slide-right :key="item.path">
+      <!-- 在v-for中使用v-if，必须要用不同的key，即v-if、v-else中可以必须不相同且唯一 -->
+      <el-breadcrumb-item v-else class="animate__animated animate__lightSpeedInRight" :key="item.title">
         {{ item.title }}
       </el-breadcrumb-item>
     </template>
