@@ -6,6 +6,7 @@
     </div>
     <div class="right">
       <notice />
+      <theme-select />
       <el-dropdown :hide-on-click="false">
         <div class="user">
           <el-avatar :size="30" :src="userAvatar" />
@@ -34,6 +35,7 @@ import { computed } from 'vue'
 import vatar from '/@/assets/images/avatar.png'
 import BreadCrumb from './breadcrumb/BreadCrumb.vue'
 import Notice from './notice/Notice.vue'
+import ThemeSelect from '/@/components/ThemeSelect/ThemeSelect.vue'
 
 const props = defineProps<{
   collapse: boolean

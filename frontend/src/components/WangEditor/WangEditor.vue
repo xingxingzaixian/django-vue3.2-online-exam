@@ -1,19 +1,17 @@
 <template>
   <div class="editor-main" v-bind="$attrs">
-    <Toolbar
-      editorId="editor"
-      style="border-bottom: 1px solid #ccc"
-      :editor="editorRef"
-      :defaultConfig="toolbarConfig"
-      :mode="mode"
-    />
-    <Editor
-      editorId="editor"
-      v-model="valueHtml"
-      :defaultConfig="editorConfig"
-      :mode="mode"
-      @onCreated="handleCreated"
-    />
+    <div style="border: 1px solid #ccc">
+      <Toolbar :editor="editorRef" :defaultConfig="toolbarConfig" :mode="mode" style="border-bottom: 1px solid #ccc" />
+      <Editor
+        :defaultConfig="editorConfig"
+        :mode="mode"
+        v-model="valueHtml"
+        @onCreated="handleCreated"
+        @onChange="handleChange"
+        @onFocus="handleFocus"
+        @onBlur="handleBlur"
+      />
+    </div>
   </div>
 </template>
 
@@ -26,22 +24,33 @@ import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 const props = defineProps<{
   mode: 'default' | 'simple'
   html: string
+  disable?: boolean
 }>()
 
 const emits = defineEmits<{
   (e: 'update:html', html: string): void
+  (e: 'onfocus'): void
+  (e: 'onblur'): void
 }>()
 
 const editorRef = shallowRef<IDomEditor>()
-
 const valueHtml = ref<string>(props.html)
-
 const editorConfig: Partial<IEditorConfig> = { placeholder: '请输入内容' }
 const toolbarConfig: Partial<IToolbarConfig> = {}
 
 const handleCreated = (editor: IDomEditor) => {
-  console.log('handleCreated', editor)
   editorRef.value = editor // 记录 editor 实例，重要！
+}
+
+const handleChange = (editor: IDomEditor) => {
+  console.log('change:', editor.getText())
+}
+
+const handleFocus = () => {
+  emits('onfocus')
+}
+const handleBlur = () => {
+  emits('onblur')
 }
 
 onBeforeUnmount(() => {
@@ -65,6 +74,21 @@ watch(
     console.log('html changed', val)
     if (props.html === val) return
     emits('update:html', val)
+  }
+)
+
+watch(
+  () => props.disable,
+  (val) => {
+    if (editorRef.value == null) return
+    if (val) {
+      editorRef.value.disable()
+    } else {
+      editorRef.value.enable()
+    }
+  },
+  {
+    immediate: true,
   }
 )
 </script>
