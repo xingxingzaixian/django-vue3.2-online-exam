@@ -4,3 +4,9 @@ export interface QuestionColumn {
   width?: number
   format?: 'html' | 'text' | 'action'
 }
+
+export interface Pagination {
+  page: number
+  pageSize: number
+  total: number
+}

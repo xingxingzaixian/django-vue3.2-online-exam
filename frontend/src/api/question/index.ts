@@ -5,7 +5,7 @@ import {
   QuestionTypeListItem,
   QuestionLevelListItem,
   QuestionOptionItem,
-  QuestionCreateItem
+  QuestionCreateItem,
 } from './types'
 
 // 获取题目列表
@@ -23,7 +23,7 @@ export const getQuestionApi = async (id: number): Promise<QuestionCreateItem> =>
 }
 // 删除题目
 export const deleteQuestionApi = async (id: number): Promise<void> => {
-  return apiHttp.delete<void>({
+  return apiHttp.delete({
     url: `/api/question/question/${id}/`,
   })
 }
@@ -69,5 +69,28 @@ export const updateQuestionApi = async (id: number, data: QuestionCreateItem) : 
   return apiHttp.put({
     url: `/api/question/question/${id}/`,
     data
+  })
+}
+
+// 创建题目选项
+export const createQuestionOptionApi = async (data: QuestionOptionItem): Promise<void> => {
+  return apiHttp.post({
+    url: `/api/question/option/`,
+    data
+  })
+}
+
+// 更新题目选项
+export const updateQuestionOptionApi = async (id: number, data: QuestionOptionItem): Promise<void> => {
+  return apiHttp.put({
+    url: `/api/question/option/${id}/`,
+    data
+  })
+}
+
+// 删除题目选项
+export const deleteQuestionOptionApi = async (id: number): Promise<void> => {
+  return apiHttp.delete({
+    url: `/api/question/option/${id}/`
   })
 }

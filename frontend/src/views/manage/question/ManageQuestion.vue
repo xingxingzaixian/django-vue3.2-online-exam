@@ -1,33 +1,44 @@
 <template>
   <div class="question">
-    <div class="tools">
-      <el-button type="primary" icon="el-icon-plus" @click="addQuestion">添加题目</el-button>
-    </div>
-    <el-table :data="tableData" style="width: 100%" :border="true">
-      <template v-for="item in columnData" :key="item.prop">
-        <el-table-column
-          v-if="!item.format || item.format === 'text'"
-          :prop="item.prop"
-          :label="item.label"
-          :width="item.width"
-        />
-        <el-table-column v-else-if="item.format && item.format === 'html'" :label="item.label" :width="item.width">
-          <template #default="scope">
-            <pre v-html="scope.row[item.prop]"></pre>
-          </template>
-        </el-table-column>
-        <el-table-column v-else-if="item.format && item.format === 'action'" :label="item.label" :width="item.width">
-          <template #default="scope">
-            <el-button size="small" @click="editQuestion(scope.row)">编辑</el-button>
-            <el-popconfirm title="确定删除此题目？" @confirm="deleteQuestion(scope.row)">
-              <template #reference>
-                <el-button size="small" type="danger">删除</el-button>
-              </template>
-            </el-popconfirm>
-          </template>
-        </el-table-column>
-      </template>
-    </el-table>
+    <el-card class="tools">
+      <el-button type="primary" @click="addQuestion">添加题目</el-button>
+    </el-card>
+    <el-card class="content">
+      <el-table :data="tableData" :border="true">
+        <template v-for="item in columnData" :key="item.prop">
+          <el-table-column
+            v-if="!item.format || item.format === 'text'"
+            :prop="item.prop"
+            :label="item.label"
+            :width="item.width"
+          />
+          <el-table-column v-else-if="item.format && item.format === 'html'" :label="item.label" :width="item.width">
+            <template #default="scope">
+              <pre v-html="scope.row[item.prop]"></pre>
+            </template>
+          </el-table-column>
+          <el-table-column v-else-if="item.format && item.format === 'action'" :label="item.label" :width="item.width">
+            <template #default="scope">
+              <el-button size="small" @click="editQuestion(scope.row)">编辑</el-button>
+              <el-popconfirm title="确定删除此题目？" @confirm="deleteQuestion(scope.row)">
+                <template #reference>
+                  <el-button size="small" type="danger">删除</el-button>
+                </template>
+              </el-popconfirm>
+            </template>
+          </el-table-column>
+        </template>
+      </el-table>
+      <el-pagination
+        class="pages"
+        background
+        layout="prev, pager, next"
+        :total="pagination.total"
+        v-model:page-size="pagination.pageSize"
+        v-model:current-page="pagination.page"
+        :hide-on-single-page="true"
+      />
+    </el-card>
   </div>
 </template>
 
@@ -35,7 +46,7 @@
 import { reactive, onMounted } from 'vue'
 import { QuestionListItem } from '/@/api/question/types'
 import { getQuestionListApi, deleteQuestionApi } from '/@/api/question'
-import { QuestionColumn } from './types'
+import { Pagination, QuestionColumn } from './types'
 import { successMessage } from '/@/utils/message'
 import { useRouter } from 'vue-router'
 
@@ -91,6 +102,12 @@ const columnData = reactive<QuestionColumn[]>([
   },
 ])
 
+const pagination = reactive<Pagination>({
+  total: 0,
+  page: 1,
+  pageSize: 15,
+})
+
 onMounted(async (): Promise<void> => {
   getQuestionListApi().then((res) => {
     tableData.splice(0, tableData.length, ...res)
@@ -129,6 +146,10 @@ const deleteQuestion = (row: QuestionListItem) => {
 
   .tools {
     @apply my-2;
+  }
+
+  .pages {
+    @apply pt-4;
   }
 }
 </style>

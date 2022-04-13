@@ -38,8 +38,17 @@ const managerRoute: AppRouteRecordRaw = {
           component: () => import('/@/views/manage/question/ManageQuestion.vue'),
           meta: {
             title: '题目管理',
-            hideInMenu: true
+            icon: 'list-view'
           },
+        },
+        {
+          path: '/manage/question/option',
+          name: 'ManageQuestionOption',
+          component: () => import('/@/views/manage/question/option/Option.vue'),
+          meta: {
+            title: '选项管理',
+            icon: 'list-view'
+          }
         },
         {
           path: '/manage/question/level',
