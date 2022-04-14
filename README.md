@@ -38,8 +38,8 @@
 
 + 4.启动前端
   + 进入到前端代码路径 `cd frontend`
-  + 安装依赖 `pnpm install`
-  + 启动前端 `pnpm run dev`
+  + 安装依赖 `yarn install`
+  + 启动前端 `yarn run dev`
 + 5.部署完毕，查看效果
   
   > 打开 http://localhost:8000 或者 http://本机ip:8000 即可查看演示效果

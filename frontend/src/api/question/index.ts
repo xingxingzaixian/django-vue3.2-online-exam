@@ -7,11 +7,13 @@ import {
   QuestionOptionItem,
   QuestionCreateItem,
 } from './types'
+import type { ReturnTotal, Pagination } from '/@/types/common'
 
 // 获取题目列表
-export const getQuestionListApi = async (): Promise<QuestionListItem[]> => {
-  return apiHttp.get<QuestionListItem[]>({
+export const getQuestionListApi = async (pagination: Pagination): Promise<ReturnTotal<QuestionListItem>> => {
+  return apiHttp.get<ReturnTotal<QuestionListItem>>({
     url: '/api/question/question/',
+    params: pagination,
   })
 }
 
@@ -21,6 +23,7 @@ export const getQuestionApi = async (id: number): Promise<QuestionCreateItem> =>
     url: `/api/question/question/${id}/`
   })
 }
+
 // 删除题目
 export const deleteQuestionApi = async (id: number): Promise<void> => {
   return apiHttp.delete({
