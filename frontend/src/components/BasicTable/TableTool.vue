@@ -8,6 +8,6 @@
 
 <style lang="less" scoped>
 .tools {
-  @apply my-2;
+  @apply mb-2;
 }
 </style>

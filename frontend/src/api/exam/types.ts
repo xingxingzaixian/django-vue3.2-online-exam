@@ -3,3 +3,9 @@ export interface ExamListItem {
 }
 
 export interface ExamCreateItem {}
+
+export interface ExamFilter {
+  name?: string
+  name__icontains?: string
+  description__icontains?: string
+}

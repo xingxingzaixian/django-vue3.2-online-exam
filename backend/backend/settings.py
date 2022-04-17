@@ -159,9 +159,8 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_FILTER_BACKENDS': [
         # 设置默认的过滤器
-        'rest_framework.filters.SearchFilter',
-        'rest_framework.filters.OrderingFilter',
         'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.OrderingFilter',
     ],
     'DEFAULT_PAGINATION_CLASS': 'utils.pagination.CustomPagination',
     'PAGE_SIZE': None,

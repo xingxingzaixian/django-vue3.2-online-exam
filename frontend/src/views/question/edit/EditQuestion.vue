@@ -41,6 +41,9 @@
               placeholder="选择题目选项"
               style="width: 440px"
               multiple
+              filterable
+              remote
+              :remote-method="obtainRemoteOption"
             />
           </el-form-item>
           <el-form-item label="答案">
@@ -86,6 +89,7 @@ import {
   QuestionLevelListItem,
   QuestionOptionItem,
 } from '/@/api/question/types'
+import { Pagination } from '/@/types/common'
 
 const route = useRoute()
 
@@ -104,6 +108,12 @@ const categoryList = reactive<QuestionCategoryListItem[]>([])
 const levelList = reactive<QuestionLevelListItem[]>([])
 const typeList = reactive<QuestionTypeListItem[]>([])
 const optionList = reactive<QuestionOptionItem[]>([])
+
+const pagination = reactive<Pagination>({
+  total: 0,
+  pageNo: 1,
+  pageSize: 500,
+})
 
 const title = computed<string>(() => {
   return route.meta.title as string
@@ -126,9 +136,15 @@ getQuestionLevelListApi().then((res) => {
   levelList.push(...res)
 })
 
-getQuestionOptionListApi().then((res) => {
-  optionList.push(...res)
+getQuestionOptionListApi(pagination).then((res) => {
+  optionList.splice(0, optionList.length, ...res.results)
 })
+
+const obtainRemoteOption = (query: string) => {
+  getQuestionOptionListApi(pagination, { content__icontains: query }).then((res) => {
+    optionList.splice(0, optionList.length, ...res.results)
+  })
+}
 
 const questionOptions = computed(() => {
   return optionList.map((item) => {

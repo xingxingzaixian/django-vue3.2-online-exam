@@ -141,6 +141,7 @@ watch(
 
 <style lang="less" scoped>
 .tags {
+  @apply mb-2;
   height: @tagViewHeight;
 
   .tag-view {
@@ -148,8 +149,7 @@ watch(
     background-color: @tagViewBgColor;
 
     .tag-view-item {
-      @apply flex items-center h-full justify-center relative px-2 rounded-sm overflow-hidden;
-      border-bottom: 0.5rem solid @mainBackgroundColor;
+      @apply flex items-center h-full justify-center relative px-2 rounded-sm overflow-hidden shadow-lg;
       border-right: 0.5rem solid @mainBackgroundColor;
 
       &:hover {
@@ -157,6 +157,10 @@ watch(
           @apply cursor-pointer;
           display: block !important;
         }
+      }
+
+      &:last-child {
+        border-right: 0;
       }
 
       .tag-item-name {

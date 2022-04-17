@@ -1,10 +1,12 @@
-import { ExamCreateItem, ExamListItem } from './types'
+import type { Pagination, ReturnTotal } from '/@/types/common';
+import type { ExamCreateItem, ExamListItem, ExamFilter } from './types'
 import apiHttp from '/@/utils/http'
 
 // 获取考试列表
-export const getExamListApi = async (): Promise<ExamListItem[]> => {
-  return apiHttp.get<ExamListItem[]>({
+export const getExamListApi = async (pagination: Pagination, filterParams?: ExamFilter): Promise<ReturnTotal<ExamListItem>> => {
+  return apiHttp.get<ReturnTotal<ExamListItem>>({
     url: '/api/exam/exam/',
+    params: {...pagination, ...filterParams},
   })
 }
 
@@ -25,7 +27,7 @@ export const createExamApi = async (data: ExamCreateItem): Promise<void> => {
 
 // 更新考试
 export const updateExamApi = async (id: number, data: ExamCreateItem): Promise<void> => {
-  return apiHttp.post({
+  return apiHttp.put({
     url: `/api/exam/exam/${id}/`,
     data
   })

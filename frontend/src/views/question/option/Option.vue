@@ -88,7 +88,7 @@ const form = reactive<QuestionOptionItem>({
 
 const pagination = reactive<Pagination>({
   total: 0,
-  page: 1,
+  pageNo: 1,
   pageSize: 15,
 })
 
@@ -97,8 +97,9 @@ const addQuestionOption = () => {
   isEdit = false
 }
 
-getQuestionOptionListApi().then((res) => {
-  tableData.splice(0, tableData.length, ...res)
+getQuestionOptionListApi(pagination).then((res) => {
+  tableData.splice(0, tableData.length, ...res.results)
+  pagination.total = res.count
 })
 
 const onSubmit = async () => {
@@ -143,14 +144,6 @@ const deleteOption = (row: QuestionOptionItem, index: number) => {
 
 <style lang="less" scoped>
 .option {
-  @apply w-1/2 mx-auto p-2;
-
-  .tools {
-    @apply my-2;
-  }
-
-  .pages {
-    @apply pt-4;
-  }
+  @apply w-1/2 mx-auto;
 }
 </style>

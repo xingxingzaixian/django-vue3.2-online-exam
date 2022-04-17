@@ -1,19 +1,21 @@
 import apiHttp from '/@/utils/http'
-import {
+import type {
   QuestionCategoryListItem,
   QuestionListItem,
   QuestionTypeListItem,
   QuestionLevelListItem,
   QuestionOptionItem,
   QuestionCreateItem,
+  QuestionFilter,
+  OptionFilter
 } from './types'
 import type { ReturnTotal, Pagination } from '/@/types/common'
 
 // 获取题目列表
-export const getQuestionListApi = async (pagination: Pagination): Promise<ReturnTotal<QuestionListItem>> => {
+export const getQuestionListApi = async (pagination: Pagination, filterParams?: QuestionFilter): Promise<ReturnTotal<QuestionListItem>> => {
   return apiHttp.get<ReturnTotal<QuestionListItem>>({
     url: '/api/question/question/',
-    params: pagination,
+    params: {...pagination, ...filterParams},
   })
 }
 
@@ -53,9 +55,10 @@ export const getQuestionLevelListApi = async () : Promise<QuestionLevelListItem[
 }
 
 // 获取题目选项列表
-export const getQuestionOptionListApi = async () : Promise<QuestionOptionItem[]> => {
-  return apiHttp.get<QuestionOptionItem[]>({
-    url: '/api/question/option/'
+export const getQuestionOptionListApi = async (pagination: Pagination, filterParams?: OptionFilter) : Promise<ReturnTotal<QuestionOptionItem>> => {
+  return apiHttp.get<ReturnTotal<QuestionOptionItem>>({
+    url: '/api/question/option/',
+    params: {...pagination, ...filterParams},
   })
 }
 

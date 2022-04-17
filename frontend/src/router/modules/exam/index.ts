@@ -18,6 +18,14 @@ const examRoute: AppRouteRecordRaw = {
       meta: {
         hideInMenu: true
       }
+    },
+    {
+      path: '/exam/add',
+      name: 'ExamAdd',
+      component: () => import('/@/views/exam/EditExam.vue'),
+      meta: {
+        hideInMenu: true
+      }
     }
   ]
 }

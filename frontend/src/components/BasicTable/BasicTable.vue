@@ -24,7 +24,7 @@
       layout="prev, pager, next"
       :total="pagin.total"
       v-model:page-size="pagin.pageSize"
-      v-model:current-page="pagin.page"
+      v-model:current-page="pagin.pageNo"
       :hide-on-single-page="true"
     />
   </el-card>
@@ -50,7 +50,7 @@ const pagin = reactive<Pagination>(toRaw(props.pagination))
 watch(
   () => props.pagination,
   () => {
-    pagin.page = props.pagination.page
+    pagin.pageNo = props.pagination.pageNo
     pagin.pageSize = props.pagination.pageSize
     pagin.total = props.pagination.total
   },
@@ -60,9 +60,9 @@ watch(
 )
 
 watch(
-  () => pagin.page,
+  () => pagin.pageNo,
   () => {
-    emits('changePage', pagin.page)
+    emits('changePage', pagin.pageNo)
   }
 )
 
@@ -74,4 +74,8 @@ watch(
 )
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.pages {
+  @apply pt-4;
+}
+</style>

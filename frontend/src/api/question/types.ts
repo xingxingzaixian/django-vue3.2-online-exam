@@ -39,3 +39,13 @@ export interface QuestionOptionItem {
   content: string
   description: string
 }
+
+export interface QuestionFilter {
+  content__icontains?: string
+  description__icontains?: string
+}
+
+export interface OptionFilter {
+  content__icontains?: string
+  description__icontains?: string
+}

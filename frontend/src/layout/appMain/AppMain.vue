@@ -40,6 +40,7 @@ provide('reload', reload)
   background-color: @mainBackgroundColor;
 
   .main-content {
+    @apply py-2;
     height: calc(100% - @tagViewHeight);
     background-color: @tagViewBgColor;
   }

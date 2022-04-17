@@ -3,7 +3,7 @@
     <table-tool>
       <el-button type="primary" @click="addQuestion">添加题目</el-button>
     </table-tool>
-    <basic-table :data="tableData" :columns="columnData" :pagination="pagination">
+    <basic-table :data="tableData" :columns="columnData" :pagination="pagination" @changePage="changePage">
       <template #content="scope">
         <pre v-html="scope.row.content"></pre>
       </template>
@@ -86,15 +86,24 @@ const columnData = reactive<ColumnType[]>([
 
 const pagination = reactive<Pagination>({
   total: 0,
-  page: 1,
+  pageNo: 1,
   pageSize: 15,
 })
 
-onMounted(async (): Promise<void> => {
-  getQuestionListApi().then((res) => {
-    tableData.splice(0, tableData.length, ...res)
-  })
+onMounted(() => {
+  updateData()
 })
+
+const updateData = () => {
+  getQuestionListApi(pagination).then((res) => {
+    tableData.splice(0, tableData.length, ...res.results)
+    pagination.total = res.count
+  })
+}
+
+const changePage = () => {
+  updateData()
+}
 
 const addQuestion = () => {
   router.push({
@@ -122,16 +131,4 @@ const deleteQuestion = (row: QuestionListItem) => {
 }
 </script>
 
-<style lang="less" scoped>
-.question {
-  @apply p-2;
-
-  .tools {
-    @apply my-2;
-  }
-
-  .pages {
-    @apply pt-4;
-  }
-}
-</style>
+<style lang="less" scoped></style>
