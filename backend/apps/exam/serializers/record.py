@@ -7,3 +7,4 @@ class RecordSerializer(serializers.ModelSerializer):
     class Meta:
         model = TblExamRecord
         fields = '__all__'
+        read_only_fields = ('score', 'joiner', 'time_cost', 'category_score')

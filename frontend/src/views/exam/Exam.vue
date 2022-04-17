@@ -3,105 +3,87 @@
     <table-tool>
       <el-button type="primary" @click="addExam">添加考试</el-button>
     </table-tool>
-    <basic-table :data="tableData" :columns="columnData" :pagination="pagination" @changePage="changePage">
-      <template #content="scope">
-        <pre v-html="scope.row['content']"></pre>
-      </template>
-      <template #descrption="scope">
-        <pre v-html="scope.row['descrption']"></pre>
-      </template>
-      <template #action="scope">
-        <el-button size="small" @click="editExam(scope.row)">编辑</el-button>
-        <el-popconfirm title="确定删除此考试？" @confirm="deleteExam(scope.row)">
-          <template #reference>
-            <el-button size="small" type="danger">删除</el-button>
-          </template>
-        </el-popconfirm>
-      </template>
-    </basic-table>
+    <div class="content">
+      <el-card class="exam_item" v-for="item in tableData" :key="item.id">
+        <template #header>
+          <div class="card-header">
+            <span class="no-wrap">{{item.name}}</span>
+            <div class="action">
+              <el-button class="button" type="text">进入考试</el-button>
+              <el-button class="button" type="text">编辑</el-button>
+              <el-button class="button" type="text" @click="deleteExam(item.id)">删除</el-button>
+            </div>
+          </div>
+        </template>
+        <div class="info">
+          <img :src="item.avatar || DefaultImg" alt="" style="width: 250px; height: 80px;">
+        </div>
+        <el-divider style="margin: 12px 0;"/>
+        <div class="score" :style="{color: outTimeColor(item)}">
+          <div class="no-wrap">限时：<span>{{item.limit_time}}</span> 分钟</div>
+          <el-divider direction="vertical"/>
+          <div class="no-wrap">总分：<span>{{item.score}}</span> 分</div>
+        </div>
+        <div class="time" :style="{color: outTimeColor(item)}">
+          <div class="no-wrap">开始：<span>{{item.start_date}}</span></div>
+          <div class="no-wrap">结束：<span>{{item.end_date}}</span></div>
+        </div>
+      </el-card>
+    </div>
+    <el-pagination
+      class="pages"
+      background
+      layout="prev, pager, next"
+      :total="pagination.total"
+      v-model:page-size="pagination.pageSize"
+      v-model:current-page="pagination.pageNo"
+      :hide-on-single-page="true"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { reactive, onBeforeMount } from 'vue'
+import { reactive, onBeforeMount, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import { Pagination, ColumnType } from '/@/types/common'
+import { Pagination } from '/@/types/common'
 import { ExamListItem } from '/@/api/exam/types'
 import { getExamListApi, deleteExamApi } from '/@/api/exam'
 import { successMessage } from '/@/utils/message'
 import TableTool from '/@/components/BasicTable/TableTool.vue'
-import BasicTable from '/@/components/BasicTable/BasicTable.vue'
+import DefaultImg from '/@/assets/images/default.jpeg'
+import dayjs from 'dayjs'
+import useSettingStore from '/@/store/setting'
 
 const router = useRouter()
+const settingStore = useSettingStore()
 const tableData = reactive<ExamListItem[]>([])
-const columnData: ColumnType[] = [
-  {
-    label: '序号',
-    prop: 'id',
-    width: 60,
-  },
-  {
-    label: '考试名称',
-    prop: 'content',
-    width: 500,
-    format: 'html',
-  },
-  {
-    label: '描述',
-    prop: 'descrption',
-    format: 'html',
-  },
-  {
-    label: '时长',
-    prop: 'limit_time',
-    width: 100,
-  },
-  {
-    label: '开始时间',
-    prop: 'start_date',
-    width: 100,
-  },
-  {
-    label: '结束时间',
-    prop: 'end_date',
-    width: 100,
-  },
-  {
-    label: '创建时间',
-    prop: 'create_time',
-    width: 180,
-  },
-  {
-    label: '更新时间',
-    prop: 'update_time',
-    width: 180,
-  },
-  {
-    label: '操作',
-    prop: 'action',
-    width: 180,
-    format: 'action',
-  },
-]
+
 const pagination = reactive<Pagination>({
   total: 0,
   pageNo: 1,
-  pageSize: 15,
+  pageSize: 18,
 })
+const outTimeColor = (item: ExamListItem): string => {
+  const now = dayjs().format('YYYY-MM-DD HH:mm:ss')
+  if (item.end_date < now) {
+    return '#ff0000'
+  }
+  return settingStore.cssVars.primaryColor as string
+}
 
 const addExam = () => {}
 
 const editExam = (row: ExamListItem) => {
   router.push({
-    name: 'ManageQuestionEdit',
+    name: 'ExamAdd',
     params: {
       id: row.id,
     },
   })
 }
 
-const deleteExam = (row: ExamListItem) => {
-  deleteExamApi(row.id).then(() => {
+const deleteExam = (id: number) => {
+  deleteExamApi(id).then(() => {
     successMessage('删除成功')
   })
 }
@@ -113,13 +95,60 @@ const updateData = () => {
   })
 }
 
-const changePage = () => {
-  updateData()
-}
-
 onBeforeMount(() => {
+  updateData()
+})
+
+watch(() => pagination.pageNo, () => {
   updateData()
 })
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.content {
+  @apply flex flex-wrap justify-start items-center;
+
+  .exam_item {
+    width: 15.66666667%;
+    margin-right: 1%;
+    margin-bottom: 1%;
+    max-height: 288px;
+
+    &:nth-child(6n) {
+      margin-right: 0;
+    }
+
+    .card-header {
+      @apply flex justify-between items-center;
+
+      span {
+        width: 50%;
+      }
+    }
+
+    .score {
+      @apply flex justify-between items-center;
+
+      span {
+        @apply text-sm;
+      }
+    }
+
+    .time {
+      @apply flex flex-col justify-start items-start;
+
+      span {
+        @apply text-sm;
+      }
+    }
+  }
+}
+
+.no-wrap {
+  @apply whitespace-nowrap overflow-hidden text-ellipsis;
+}
+
+.pages {
+  @apply pt-4;
+}
+</style>

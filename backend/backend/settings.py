@@ -165,7 +165,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'utils.pagination.CustomPagination',
     'PAGE_SIZE': None,
     'DATETIME_FORMAT': '%Y-%m-%d %H:%M:%S',
-    'DATETIME_INPUT_FORMATS': '%Y-%m-%d %H:%M:%S',
+    'DATETIME_INPUT_FORMATS': ['%Y-%m-%d %H:%M:%S'],
     'DATE_FORMAT': "%Y-%m-%d",
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
 }
