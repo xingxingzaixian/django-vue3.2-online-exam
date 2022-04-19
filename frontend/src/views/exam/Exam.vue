@@ -7,26 +7,36 @@
       <el-card class="exam_item" v-for="item in tableData" :key="item.id">
         <template #header>
           <div class="card-header">
-            <span class="no-wrap">{{item.name}}</span>
+            <span class="no-wrap">{{ item.name }}</span>
             <div class="action">
               <el-button class="button" type="text">进入考试</el-button>
-              <el-button class="button" type="text">编辑</el-button>
-              <el-button class="button" type="text" @click="deleteExam(item.id)">删除</el-button>
+              <div v-permission="'editAndDelete'">
+                <el-button class="button" type="text">编辑</el-button>
+                <el-button class="button" type="text" @click="deleteExam(item.id)">删除</el-button>
+              </div>
             </div>
           </div>
         </template>
         <div class="info">
-          <img :src="item.avatar || DefaultImg" alt="" style="width: 250px; height: 80px;">
+          <img :src="item.avatar || DefaultImg" alt="" style="width: 250px; height: 80px" />
         </div>
-        <el-divider style="margin: 12px 0;"/>
-        <div class="score" :style="{color: outTimeColor(item)}">
-          <div class="no-wrap">限时：<span>{{item.limit_time}}</span> 分钟</div>
-          <el-divider direction="vertical"/>
-          <div class="no-wrap">总分：<span>{{item.score}}</span> 分</div>
+        <el-divider style="margin: 12px 0" />
+        <div class="score" :style="{ color: outTimeColor(item) }">
+          <div class="no-wrap">
+            限时：<span>{{ item.limit_time }}</span> 分钟
+          </div>
+          <el-divider direction="vertical" />
+          <div class="no-wrap">
+            总分：<span>{{ item.score }}</span> 分
+          </div>
         </div>
-        <div class="time" :style="{color: outTimeColor(item)}">
-          <div class="no-wrap">开始：<span>{{item.start_date}}</span></div>
-          <div class="no-wrap">结束：<span>{{item.end_date}}</span></div>
+        <div class="time" :style="{ color: outTimeColor(item) }">
+          <div class="no-wrap">
+            开始：<span>{{ item.start_date }}</span>
+          </div>
+          <div class="no-wrap">
+            结束：<span>{{ item.end_date }}</span>
+          </div>
         </div>
       </el-card>
     </div>
@@ -99,9 +109,12 @@ onBeforeMount(() => {
   updateData()
 })
 
-watch(() => pagination.pageNo, () => {
-  updateData()
-})
+watch(
+  () => pagination.pageNo,
+  () => {
+    updateData()
+  }
+)
 </script>
 
 <style lang="less" scoped>
