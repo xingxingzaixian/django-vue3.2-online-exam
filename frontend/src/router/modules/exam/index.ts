@@ -24,6 +24,16 @@ const examRoute: AppRouteRecordRaw = {
       name: 'ExamAdd',
       component: () => import('/@/views/exam/EditExam.vue'),
       meta: {
+        title: '新增考试',
+        hideInMenu: true
+      }
+    },
+    {
+      path: '/exam/edit/:id',
+      name: 'ExamEdit',
+      component: () => import('/@/views/exam/EditExam.vue'),
+      meta: {
+        title: '编辑考试',
         hideInMenu: true
       }
     }

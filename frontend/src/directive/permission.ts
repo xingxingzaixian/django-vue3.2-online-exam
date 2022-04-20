@@ -3,18 +3,16 @@ import type { Directive, DirectiveBinding } from 'vue'
 const ownPermission = ['user', 'order'];
 
 const PermissionDirective: Directive = {
-  created(el: HTMLElement, binding: DirectiveBinding) {
+  beforeMount(el: HTMLElement, binding: DirectiveBinding) {
     const permission: string = binding.value
-    console.log(binding)
     if (permission && !ownPermission.includes(permission)) {
-      el.parentNode?.removeChild(el); // 关键代码, 没有权限则删除元素
+      el.style.display = 'none'
     }
   },
   updated(el: HTMLElement, binding: DirectiveBinding) {
     const permission: string = binding.value
-    console.log(binding)
     if (permission && !ownPermission.includes(permission)) {
-      el.parentNode?.removeChild(el); // 关键代码, 没有权限则删除元素
+      el.style.display = 'none'
     }
   }
 }

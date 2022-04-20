@@ -71,7 +71,7 @@
 
 <script lang="ts" setup>
 import { computed, reactive, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import WangEditor from '/@/components/WangEditor/WangEditor.vue'
 import {
   getQuestionTypeListApi,
@@ -90,9 +90,10 @@ import {
   QuestionOptionItem,
 } from '/@/api/question/types'
 import { Pagination } from '/@/types/common'
+import { successMessage } from '/@/utils/message'
 
 const route = useRoute()
-
+const router = useRouter()
 const form = reactive<QuestionCreateItem>({
   content: '',
   description: '',
@@ -103,7 +104,7 @@ const form = reactive<QuestionCreateItem>({
   category_tag: '',
 })
 const stepActive = ref<number>(0)
-const isEdit = ref<boolean>(route.params && route.params.id ? true : false)
+const isEdit: boolean = route.params && route.params.id ? true : false
 const categoryList = reactive<QuestionCategoryListItem[]>([])
 const levelList = reactive<QuestionLevelListItem[]>([])
 const typeList = reactive<QuestionTypeListItem[]>([])
@@ -169,18 +170,20 @@ const questionAnswers = computed(() => {
 
 const onSubmit = async () => {
   if (stepActive.value === 2) {
-    console.log(form)
-    if (isEdit.value) {
+    if (isEdit) {
       await updateQuestionApi(Number(route.params.id), form)
+      successMessage('更新成功')
     } else {
       await createQuestionApi(form)
+      successMessage('添加成功')
     }
+    router.push({ name: 'Question' })
   } else {
     stepActive.value += 1
   }
 }
 
-if (isEdit.value) {
+if (isEdit) {
   getQuestionApi(Number(route.params.id)).then((res) => {
     form.content = res.content
     form.description = res.description

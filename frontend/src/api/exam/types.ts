@@ -4,12 +4,12 @@ export interface ExamListItem {
   avatar: string
   description: string
   score: string
-  limit_time: string
+  limit_time: number
   start_date: string
   end_date: string
 }
 
-export interface ExamCreateItem {}
+export type ExamCreateItem = Omit<ExamListItem, 'id' | 'score'>
 
 export interface ExamFilter {
   name?: string

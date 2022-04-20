@@ -15,7 +15,8 @@ import {
   IndentLeft,
   IndentRight,
   Remind,
-  ClothesCrewNeck
+  ClothesCrewNeck,
+  Plus
 } from '@icon-park/vue-next'
 
 export const useIconPark = (app: App) => {
@@ -35,4 +36,5 @@ export const useIconPark = (app: App) => {
   app.component('IconParkIndentRight', IndentRight)
   app.component('IconParkRemind', Remind)
   app.component('IconParkClothesCrewNeck', ClothesCrewNeck)
+  app.component('IconParkPlus', Plus)
 }

@@ -9,16 +9,16 @@
           <div class="card-header">
             <span class="no-wrap">{{ item.name }}</span>
             <div class="action">
-              <el-button class="button" type="text">进入考试</el-button>
-              <div v-permission="'editAndDelete'">
-                <el-button class="button" type="text">编辑</el-button>
+              <el-button class="button" type="text" v-permission="'editAndDelete'">进入考试</el-button>
+              <div v-permission="'user'">
+                <el-button class="button" type="text" @click="editExam(item)">编辑</el-button>
                 <el-button class="button" type="text" @click="deleteExam(item.id)">删除</el-button>
               </div>
             </div>
           </div>
         </template>
         <div class="info">
-          <img :src="item.avatar || DefaultImg" alt="" style="width: 250px; height: 80px" />
+          <el-image :src="item.avatar || DefaultImg" alt="" style="width: 100%; height: 100%" fit="contain" />
         </div>
         <el-divider style="margin: 12px 0" />
         <div class="score" :style="{ color: outTimeColor(item) }">
@@ -81,11 +81,13 @@ const outTimeColor = (item: ExamListItem): string => {
   return settingStore.cssVars.primaryColor as string
 }
 
-const addExam = () => {}
+const addExam = () => {
+  router.push({ name: 'ExamAdd' })
+}
 
 const editExam = (row: ExamListItem) => {
   router.push({
-    name: 'ExamAdd',
+    name: 'ExamEdit',
     params: {
       id: row.id,
     },
@@ -129,6 +131,10 @@ watch(
 
     &:nth-child(6n) {
       margin-right: 0;
+    }
+
+    .info {
+      @apply w-full h-20;
     }
 
     .card-header {

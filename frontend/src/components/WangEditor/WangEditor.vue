@@ -62,7 +62,6 @@ onBeforeUnmount(() => {
 watch(
   () => props.html,
   (val) => {
-    console.log('prop html changed', val)
     if (valueHtml.value === val) return
     valueHtml.value = val
   }
@@ -71,7 +70,6 @@ watch(
 watch(
   () => valueHtml.value,
   (val) => {
-    console.log('html changed', val)
     if (props.html === val) return
     emits('update:html', val)
   }
