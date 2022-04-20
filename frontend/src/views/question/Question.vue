@@ -107,13 +107,13 @@ const changePage = () => {
 
 const addQuestion = () => {
   router.push({
-    name: 'ManageQuestionCreate',
+    name: 'QuestionCreate',
   })
 }
 
 const editQuestion = (row: QuestionListItem) => {
   router.push({
-    name: 'ManageQuestionEdit',
+    name: 'QuestionEdit',
     params: {
       id: row.id,
     },

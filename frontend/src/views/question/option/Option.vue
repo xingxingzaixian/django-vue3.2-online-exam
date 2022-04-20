@@ -21,22 +21,24 @@
         </template>
       </basic-table>
     </div>
-    <el-dialog v-model="dialogFormVisible" title="编辑题目选项">
-      <el-form :model="form" label-width="70px">
-        <el-form-item label="选项内容">
-          <wang-editor v-model:html="form.content" mode="simple" style="min-width: 300px" />
-        </el-form-item>
-        <el-form-item label="选项解释">
-          <wang-editor v-model:html="form.description" mode="simple" style="min-width: 300px" />
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">取消</el-button>
-          <el-button type="primary" @click="onSubmit" :loading="isLoading">确定</el-button>
-        </span>
-      </template>
-    </el-dialog>
+    <teleport to="body">
+      <el-dialog v-model="dialogFormVisible" title="编辑题目选项">
+        <el-form :model="form" label-width="70px">
+          <el-form-item label="选项内容">
+            <wang-editor v-model:html="form.content" mode="simple" style="min-width: 300px" />
+          </el-form-item>
+          <el-form-item label="选项解释">
+            <wang-editor v-model:html="form.description" mode="simple" style="min-width: 300px" />
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取消</el-button>
+            <el-button type="primary" @click="onSubmit" :loading="isLoading">确定</el-button>
+          </span>
+        </template>
+      </el-dialog>
+    </teleport>
   </div>
 </template>
 

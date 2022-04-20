@@ -53,7 +53,7 @@ const managerRoute: AppRouteRecordRaw = {
       name: 'QuestionCategory',
       component: () => import('/@/views/question/category/QuestionCategory.vue'),
       meta: {
-        title: '题目类型',
+        title: '题目分类',
         hideInMenu: true
       }
     },
