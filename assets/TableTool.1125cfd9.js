@@ -1,0 +1,1 @@
+import{z as r}from"./element-plus.d18fd549.js";import{_ as t}from"./index.9d191a4c.js";import{o as _,Q as a,R as s,D as c}from"./@vue.e7449577.js";const l={};function n(e,d){const o=r;return _(),a(o,{class:"tools"},{default:s(()=>[c(e.$slots,"default",{},void 0,!0)]),_:3})}var i=t(l,[["render",n],["__scopeId","data-v-f605eb44"]]);export{i as T};
