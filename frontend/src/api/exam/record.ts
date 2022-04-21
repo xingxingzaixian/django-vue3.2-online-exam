@@ -1,5 +1,3 @@
-import type { Pagination, ReturnTotal } from '/@/types/common';
-import type { ExamCreateItem, ExamListItem, ExamFilter } from './types'
 import apiHttp from '/@/utils/http'
 
 
