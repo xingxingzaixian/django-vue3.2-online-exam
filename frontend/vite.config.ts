@@ -8,7 +8,7 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 // https://vitejs.dev/config/
 export default ({ mode }: ConfigEnv): UserConfigExport => {
-  const { VITE_APP_PORT, VITE_APP_PROXY } = loadEnv(mode, process.cwd())
+  const { VITE_APP_PORT, VITE_APP_PROXY, VITE_APP_BASE_PATH } = loadEnv(mode, process.cwd())
 
   const createProxy = (propxyList) => {
     const ret = {} as Record<string, ProxyOptions>
@@ -24,6 +24,7 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
   }
 
   return {
+    base: VITE_APP_BASE_PATH,
     plugins: [
       vue(),
       AutoImport({
