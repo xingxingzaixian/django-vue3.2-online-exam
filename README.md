@@ -26,15 +26,16 @@
   ```
 + 2.初始化环境
   
-  > 安装mysql的步骤这里省略，网上的教程很多。安装好mysql后，执行 doc/sql/exam.sql 文件导入数据库信息。
-  > 使用 Pip 安装 Pipenv 包
+  > 安装mysql的步骤这里省略，网上的教程很多。安装好mysql后，修改settings.py中的数据库连接信息，创建好数据库。
+  > 使用 pip 安装 pipenv 包
   
 + 3.启动后端
   
-  > 进入 backend 目录下，执行 `Pipenv install`，注意我用的是 python3.8，如果你用的是其他版本，请将 Pipfile 文件中的版本号改一下
-  > 执行完上面的安装命令后，再执行 `Pipenv run dev`，就启动了后端，在浏览器端访问 http://localhost:9527/docs 即可看到后端的 API 界面
+  > 进入 backend 目录下，执行 `pipenv install`，注意我用的是 python3.8，如果你用的是其他版本，请将 Pipfile 文件中的版本号改一下
+  > 安装好依赖以后，需要初始化数据库信息，执行 `pipenv run migrate`
+  > 执行完上面的安装命令后，再执行 `pipenv run dev`，就启动了后端，在浏览器端访问 http://localhost:9527/docs 即可看到后端的 API 界面
 
-  ![API 文档](doc/images/api.png)
+  ![API 文档](images/api.png)
 
 + 4.启动前端
   + 进入到前端代码路径 `cd frontend`
