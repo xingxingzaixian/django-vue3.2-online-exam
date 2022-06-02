@@ -1,4 +1,4 @@
-from .category import CategoryViewset
+from .category import ExamCategoryViewset
 from .exam import ExamViewset
-from .level import LevelViewset
+from .level import ExamLevelViewset
 from .record import RecordViewset

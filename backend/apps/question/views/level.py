@@ -1,9 +1,9 @@
 from rest_framework.viewsets import ModelViewSet
 
 from question.models import TblQuestionLevel as Model
-from question.serializers import LevelSerializer as Serializer
+from question.serializers import QuestionLevelSerializer as Serializer
 
 
-class LevelViewset(ModelViewSet):
+class QuestionLevelViewset(ModelViewSet):
     queryset = Model.objects.all().order_by('-id')
     serializer_class = Serializer

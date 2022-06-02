@@ -9,6 +9,8 @@ from django.db.models import Q
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
 from django.contrib.auth.backends import UserModel
+from drf_spectacular.extensions import OpenApiAuthenticationExtension
+from drf_spectacular.plumbing import build_bearer_security_scheme_object
 
 from utils.auth.jwt_util import JwtUtil
 from threading import local
@@ -17,6 +19,8 @@ _thread_local = local()
 
 
 class JwtAuthentication(BaseAuthentication):
+    keyword = 'Bearer'
+    
     def authenticate(self, request):
         access_token = request.META.get('HTTP_AUTHORIZATION', None)
         if access_token:
@@ -39,3 +43,17 @@ class JwtAuthentication(BaseAuthentication):
 
 def get_current_user():
     return getattr(_thread_local, 'user', None)
+
+
+class JWTTokenScheme(OpenApiAuthenticationExtension):
+    target_class = 'utils.auth.authentication.JwtAuthentication'
+    name = 'JwtTokenAuth'
+    match_subclasses = True
+    priority = 1
+
+    def get_security_definition(self, auto_schema):
+        return build_bearer_security_scheme_object(
+            header_name='Authorization',
+            token_prefix=self.target.keyword,
+            bearer_format='JWT'
+        )

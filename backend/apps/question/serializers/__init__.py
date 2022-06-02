@@ -1,5 +1,5 @@
-from .category import CategorySerializer
-from .level import LevelSerializer
+from .category import QuestionCategorySerializer
+from .level import QuestionLevelSerializer
 from .question import QuestionCreateSerializer, QuestionListSerializer
-from .option import OptionSerializer
-from .type_ import TypeSerializer
+from .option import QuestionOptionSerializer
+from .type_ import QuestionTypeSerializer

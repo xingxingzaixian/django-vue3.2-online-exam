@@ -4,7 +4,7 @@
 @create: 2020/9/6
 @description: 
 """
-import email
+
 import re
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError

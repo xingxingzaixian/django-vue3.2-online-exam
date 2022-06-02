@@ -1,14 +1,14 @@
 from django.urls import path
 from rest_framework.routers import SimpleRouter
 
-from question.views import CategoryViewset, LevelViewset, OptionViewset, QuestionViewset, TypeViewset
+from question.views import QuestionCategoryViewset, QuestionLevelViewset, QuestionOptionViewset, QuestionViewset, QuestionTypeViewset
 
 router = SimpleRouter()
 router.register('question', QuestionViewset)
-router.register('category', CategoryViewset)
-router.register('level', LevelViewset)
-router.register('option', OptionViewset)
-router.register('type', TypeViewset)
+router.register('category', QuestionCategoryViewset)
+router.register('level', QuestionLevelViewset)
+router.register('option', QuestionOptionViewset)
+router.register('type', QuestionTypeViewset)
 
 urlpatterns = []
 

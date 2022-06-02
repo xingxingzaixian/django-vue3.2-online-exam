@@ -12,6 +12,7 @@ PyMySQL = "*"
 django-filter = "*"
 coreapi = "*"
 loguru = "*"
+drf-spectacular = {extras = ["sidecar"], version = "*"}
 
 [dev-packages]
 
