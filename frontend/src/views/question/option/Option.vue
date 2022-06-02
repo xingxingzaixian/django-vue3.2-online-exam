@@ -6,10 +6,10 @@
       </table-tool>
       <basic-table :data="tableData" :columns="columnData" :pagination="pagination">
         <template #content="scope">
-          <pre v-html="scope.row.content"></pre>
+          <pre v-html="scope.row.content" style="white-space: pre-wrap"></pre>
         </template>
         <template #description="scope">
-          <pre v-html="scope.row.description"></pre>
+          <pre v-html="scope.row.description" style="white-space: pre-wrap"></pre>
         </template>
         <template #action="scope">
           <el-button size="small" @click="editOption(scope.row, scope.$index)">编辑</el-button>
@@ -25,7 +25,7 @@
       <el-dialog v-model="dialogFormVisible" title="编辑题目选项">
         <el-form :model="form" label-width="70px">
           <el-form-item label="选项内容">
-            <wang-editor v-model:html="form.content" mode="simple" style="min-width: 300px" />
+            <wang-editor v-model:html="form.content" v-model:text="form.text" mode="simple" style="min-width: 300px" />
           </el-form-item>
           <el-form-item label="选项解释">
             <wang-editor v-model:html="form.description" mode="simple" style="min-width: 300px" />
@@ -43,7 +43,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import type { QuestionOptionItem } from '/@/api/question/types'
 import TableTool from '/@/components/BasicTable/TableTool.vue'
 import BasicTable from '/@/components/BasicTable/BasicTable.vue'
@@ -71,7 +71,7 @@ const columnData: ColumnType[] = [
     format: 'html',
   },
   {
-    label: '选项内容',
+    label: '操作',
     prop: 'action',
     width: 150,
     format: 'action',
@@ -84,6 +84,7 @@ let currentId: number = -1
 let editIndex: number = -1
 const form = reactive<QuestionOptionItem>({
   id: -1,
+  text: '',
   content: '',
   description: '',
 })
@@ -99,11 +100,6 @@ const addQuestionOption = () => {
   isEdit = false
 }
 
-getQuestionOptionListApi(pagination).then((res) => {
-  tableData.splice(0, tableData.length, ...res.results)
-  pagination.total = res.count
-})
-
 const onSubmit = async () => {
   try {
     isLoading.value = true
@@ -116,6 +112,7 @@ const onSubmit = async () => {
       successMessage('更新选项成功')
     }
     dialogFormVisible.value = false
+    updateData()
   } catch (err) {
     console.log(err)
   } finally {
@@ -142,6 +139,17 @@ const deleteOption = (row: QuestionOptionItem, index: number) => {
       errorMessage(err.message)
     })
 }
+
+const updateData = () => {
+  getQuestionOptionListApi(pagination).then((res) => {
+    tableData.splice(0, tableData.length, ...res.results)
+    pagination.total = res.count
+  })
+}
+
+onMounted(() => {
+  updateData()
+})
 </script>
 
 <style lang="less" scoped>

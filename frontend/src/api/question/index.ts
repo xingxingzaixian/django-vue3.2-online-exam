@@ -14,7 +14,7 @@ import type { ReturnTotal, Pagination } from '/@/types/common'
 // 获取题目列表
 export const getQuestionListApi = async (pagination: Pagination, filterParams?: QuestionFilter): Promise<ReturnTotal<QuestionListItem>> => {
   return apiHttp.get<ReturnTotal<QuestionListItem>>({
-    url: '/api/question/question/',
+    url: '/question/question/',
     params: {...pagination, ...filterParams},
   })
 }
@@ -22,42 +22,42 @@ export const getQuestionListApi = async (pagination: Pagination, filterParams?: 
 // 获取题目信息
 export const getQuestionApi = async (id: number): Promise<QuestionCreateItem> => {
   return apiHttp.get<QuestionCreateItem>({
-    url: `/api/question/question/${id}/`
+    url: `/question/question/${id}/`
   })
 }
 
 // 删除题目
 export const deleteQuestionApi = async (id: number): Promise<void> => {
   return apiHttp.delete({
-    url: `/api/question/question/${id}/`,
+    url: `/question/question/${id}/`,
   })
 }
 
 // 获取题目类型列表
 export const getQuestionTypeListApi = async (): Promise<QuestionTypeListItem[]> => {
   return apiHttp.get<QuestionTypeListItem[]>({
-    url: '/api/question/type/',
+    url: '/question/type/',
   })
 }
 
 // 获取题目分类列表
 export const getQuestionCategoryListApi = async (): Promise<QuestionCategoryListItem[]> => {
   return apiHttp.get<QuestionCategoryListItem[]>({
-    url: '/api/question/category/'
+    url: '/question/category/'
   })
 }
 
 // 获取题目难度列表
 export const getQuestionLevelListApi = async () : Promise<QuestionLevelListItem[]> => {
   return apiHttp.get<QuestionLevelListItem[]>({
-    url: '/api/question/level/'
+    url: '/question/level/'
   })
 }
 
 // 获取题目选项列表
 export const getQuestionOptionListApi = async (pagination: Pagination, filterParams?: OptionFilter) : Promise<ReturnTotal<QuestionOptionItem>> => {
   return apiHttp.get<ReturnTotal<QuestionOptionItem>>({
-    url: '/api/question/option/',
+    url: '/question/option/',
     params: {...pagination, ...filterParams},
   })
 }
@@ -65,7 +65,7 @@ export const getQuestionOptionListApi = async (pagination: Pagination, filterPar
 // 创建题目
 export const createQuestionApi = async (data: QuestionCreateItem) : Promise<void> => {
   return apiHttp.post({
-    url: '/api/question/question/',
+    url: '/question/question/',
     data
   })
 }
@@ -73,7 +73,7 @@ export const createQuestionApi = async (data: QuestionCreateItem) : Promise<void
 // 更新题目
 export const updateQuestionApi = async (id: number, data: QuestionCreateItem) : Promise<void> => {
   return apiHttp.put({
-    url: `/api/question/question/${id}/`,
+    url: `/question/question/${id}/`,
     data
   })
 }
@@ -81,7 +81,7 @@ export const updateQuestionApi = async (id: number, data: QuestionCreateItem) : 
 // 创建题目选项
 export const createQuestionOptionApi = async (data: QuestionOptionItem): Promise<void> => {
   return apiHttp.post({
-    url: `/api/question/option/`,
+    url: `/question/option/`,
     data
   })
 }
@@ -89,7 +89,7 @@ export const createQuestionOptionApi = async (data: QuestionOptionItem): Promise
 // 更新题目选项
 export const updateQuestionOptionApi = async (id: number, data: QuestionOptionItem): Promise<void> => {
   return apiHttp.put({
-    url: `/api/question/option/${id}/`,
+    url: `/question/option/${id}/`,
     data
   })
 }
@@ -97,6 +97,6 @@ export const updateQuestionOptionApi = async (id: number, data: QuestionOptionIt
 // 删除题目选项
 export const deleteQuestionOptionApi = async (id: number): Promise<void> => {
   return apiHttp.delete({
-    url: `/api/question/option/${id}/`
+    url: `/question/option/${id}/`
   })
 }

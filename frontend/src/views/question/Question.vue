@@ -5,10 +5,10 @@
     </table-tool>
     <basic-table :data="tableData" :columns="columnData" :pagination="pagination" @changePage="changePage">
       <template #content="scope">
-        <pre v-html="scope.row.content"></pre>
+        <pre v-html="scope.row.content" style="white-space: pre-wrap"></pre>
       </template>
       <template #description="scope">
-        <pre v-html="scope.row.description"></pre>
+        <pre v-html="scope.row.description" style="white-space: pre-wrap"></pre>
       </template>
       <template #action="scope">
         <el-button size="small" @click="editQuestion(scope.row)">编辑</el-button>

@@ -25,10 +25,12 @@ const props = defineProps<{
   mode: 'default' | 'simple'
   html: string
   disable?: boolean
+  text?: string
 }>()
 
 const emits = defineEmits<{
   (e: 'update:html', html: string): void
+  (e: 'update:text', text: string): void
   (e: 'onfocus'): void
   (e: 'onblur'): void
 }>()
@@ -63,7 +65,11 @@ watch(
   () => props.html,
   (val) => {
     if (valueHtml.value === val) return
-    valueHtml.value = val
+    if (!val.includes('<p>')) {
+      valueHtml.value = `<p>${val}</p>`
+    } else {
+      valueHtml.value = val
+    }
   }
 )
 
@@ -72,6 +78,11 @@ watch(
   (val) => {
     if (props.html === val) return
     emits('update:html', val)
+
+    // 更新文本内容
+    const editor = editorRef.value
+    if (editor == null) return
+    emits('update:text', editor.getText())
   }
 )
 

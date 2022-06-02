@@ -36,6 +36,7 @@ export interface QuestionLevelListItem extends QuestionCommonItem {
 
 export interface QuestionOptionItem {
   id: number
+  text: string
   content: string
   description: string
 }

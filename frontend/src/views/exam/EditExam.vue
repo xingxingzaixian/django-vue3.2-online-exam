@@ -87,6 +87,7 @@ const disableEndDate = (date: Date) => {
 
 if (isEdit) {
   getExamApi(Number(route.params.id)).then((res) => {
+    console.log(res)
     form.name = res.name
     form.avatar = res.avatar
     form.description = res.description

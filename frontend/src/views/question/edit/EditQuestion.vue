@@ -150,7 +150,7 @@ const obtainRemoteOption = (query: string) => {
 const questionOptions = computed(() => {
   return optionList.map((item) => {
     return {
-      label: item.content,
+      label: item.text,
       value: item.id,
     }
   })
@@ -161,7 +161,7 @@ const questionAnswers = computed(() => {
     const item = optionList.find((option) => option.id === i)
     if (item) {
       return {
-        label: item.content,
+        label: item.text,
         value: item.id,
       }
     }

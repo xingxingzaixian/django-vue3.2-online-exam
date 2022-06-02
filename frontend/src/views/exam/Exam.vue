@@ -4,41 +4,13 @@
       <el-button type="primary" @click="addExam">添加考试</el-button>
     </table-tool>
     <div class="content">
-      <el-card class="exam_item" v-for="item in tableData" :key="item.id">
-        <template #header>
-          <div class="card-header">
-            <span class="no-wrap">{{ item.name }}</span>
-            <div class="action">
-              <el-button class="button" type="text" v-permission="'editAndDelete'">进入考试</el-button>
-              <div v-permission="'user'">
-                <el-button class="button" type="text" @click="editExam(item)">编辑</el-button>
-                <el-button class="button" type="text" @click="deleteExam(item.id)">删除</el-button>
-              </div>
-            </div>
-          </div>
-        </template>
-        <div class="info">
-          <el-image :src="item.avatar || DefaultImg" alt="" style="width: 100%; height: 100%" fit="contain" />
+      <exam-item class="exam_item" v-for="item in tableData" :key="item.id" :item="item">
+        <el-button class="button" type="text" v-permission="'editAndDelete'">进入考试</el-button>
+        <div v-permission="'user'">
+          <el-button class="button" type="text" @click="editExam(item)">编辑</el-button>
+          <el-button class="button" type="text" @click="deleteExam(item.id)">删除</el-button>
         </div>
-        <el-divider style="margin: 12px 0" />
-        <div class="score" :style="{ color: outTimeColor(item) }">
-          <div class="no-wrap">
-            限时：<span>{{ item.limit_time }}</span> 分钟
-          </div>
-          <el-divider direction="vertical" />
-          <div class="no-wrap">
-            总分：<span>{{ item.score }}</span> 分
-          </div>
-        </div>
-        <div class="time" :style="{ color: outTimeColor(item) }">
-          <div class="no-wrap">
-            开始：<span>{{ item.start_date }}</span>
-          </div>
-          <div class="no-wrap">
-            结束：<span>{{ item.end_date }}</span>
-          </div>
-        </div>
-      </el-card>
+      </exam-item>
     </div>
     <el-pagination
       class="pages"
@@ -60,12 +32,9 @@ import { ExamListItem } from '/@/api/exam/types'
 import { getExamListApi, deleteExamApi } from '/@/api/exam'
 import { successMessage } from '/@/utils/message'
 import TableTool from '/@/components/BasicTable/TableTool.vue'
-import DefaultImg from '/@/assets/images/default.jpeg'
-import dayjs from 'dayjs'
-import useSettingStore from '/@/store/setting'
+import ExamItem from './ExamItem.vue'
 
 const router = useRouter()
-const settingStore = useSettingStore()
 const tableData = reactive<ExamListItem[]>([])
 
 const pagination = reactive<Pagination>({
@@ -73,13 +42,6 @@ const pagination = reactive<Pagination>({
   pageNo: 1,
   pageSize: 18,
 })
-const outTimeColor = (item: ExamListItem): string => {
-  const now = dayjs().format('YYYY-MM-DD HH:mm:ss')
-  if (item.end_date < now) {
-    return '#ff0000'
-  }
-  return settingStore.cssVars.primaryColor as string
-}
 
 const addExam = () => {
   router.push({ name: 'ExamAdd' })
@@ -133,33 +95,33 @@ watch(
       margin-right: 0;
     }
 
-    .info {
-      @apply w-full h-20;
-    }
+    // .info {
+    //   @apply w-full h-20;
+    // }
 
-    .card-header {
-      @apply flex justify-between items-center;
+    // .card-header {
+    //   @apply flex justify-between items-center;
 
-      span {
-        width: 50%;
-      }
-    }
+    //   span {
+    //     width: 50%;
+    //   }
+    // }
 
-    .score {
-      @apply flex justify-between items-center;
+    // .score {
+    //   @apply flex justify-between items-center;
 
-      span {
-        @apply text-sm;
-      }
-    }
+    //   span {
+    //     @apply text-sm;
+    //   }
+    // }
 
-    .time {
-      @apply flex flex-col justify-start items-start;
+    // .time {
+    //   @apply flex flex-col justify-start items-start;
 
-      span {
-        @apply text-sm;
-      }
-    }
+    //   span {
+    //     @apply text-sm;
+    //   }
+    // }
   }
 }
 
