@@ -1,7 +1,7 @@
 # django-vue3.2-online-exam
 
 ### 介绍
-基于 Django+Vue3.2+TypeScript 的在线考试系统
+基于 Django+Vue3.2+TypeScript 的在线考试系统，在线体验：http://exam.xingxingzaixian.fun，欢迎大家提issue
 
 ### 功能简介
 
