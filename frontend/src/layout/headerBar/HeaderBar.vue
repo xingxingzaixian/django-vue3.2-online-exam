@@ -19,8 +19,10 @@
               <icon-park icon="me" />
               用户中心
             </el-dropdown-item>
-            <el-dropdown-item>用户中心</el-dropdown-item>
-            <el-dropdown-item divided @click="handleExit">退出登录</el-dropdown-item>
+            <el-dropdown-item divided @click="handleExit">
+              <icon-park icon="logout" />
+              退出登录
+            </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>

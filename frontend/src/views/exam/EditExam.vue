@@ -2,20 +2,20 @@
   <div class="exam-content">
     <h1>{{ route.meta.title }}</h1>
     <el-divider />
-    <el-form :model="form" label-width="80px">
-      <el-form-item label="名称">
+    <el-form ref="ruleFormRef" :model="form" :rules="rules" label-width="80px">
+      <el-form-item label="名称" prop="name">
         <el-input v-model="form.name" />
       </el-form-item>
-      <el-form-item label="图标">
+      <el-form-item label="图标" prop="avatar">
         <el-input v-model="form.avatar" />
       </el-form-item>
       <el-form-item label="描述">
         <wang-editor v-model:html="form.description" mode="simple"></wang-editor>
       </el-form-item>
-      <el-form-item label="限时">
+      <el-form-item label="限时" prop="limit_time">
         <el-input-number v-model="form.limit_time" />
       </el-form-item>
-      <el-form-item label="开始时间">
+      <el-form-item label="开始时间" prop="start_date">
         <el-date-picker
           v-model="form.start_date"
           type="datetime"
@@ -25,7 +25,7 @@
           :disabledDate="disableStartDate"
         />
       </el-form-item>
-      <el-form-item label="结束时间">
+      <el-form-item label="结束时间" prop="end_date">
         <el-date-picker
           v-model="form.end_date"
           type="datetime"
@@ -43,17 +43,20 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import dayjs from 'dayjs'
 import { ExamCreateItem } from '/@/api/exam/types'
 import WangEditor from '/@/components/WangEditor/WangEditor.vue'
 import { getExamApi, createExamApi, updateExamApi } from '/@/api/exam'
 import { successMessage } from '/@/utils/message'
+import type { FormInstance, FormRules } from 'element-plus'
 
 const route = useRoute()
 const router = useRouter()
 const isEdit: boolean = route.params && route.params.id ? true : false
+const ruleFormRef = ref<FormInstance>()
+
 const form = reactive<ExamCreateItem>({
   name: '',
   avatar: '',
@@ -63,18 +66,39 @@ const form = reactive<ExamCreateItem>({
   end_date: '',
 })
 
+const rules = reactive<FormRules>({
+  name: [
+    { required: true, message: '请输入名称', trigger: 'blur' },
+    { min: 2, max: 20, message: '长度在 2 到 20 个字符', trigger: 'blur' },
+  ],
+  avatar: [{ required: true, message: '请选择图标', trigger: 'blur' }],
+  limit_time: [
+    { required: true, message: '请输入限时', trigger: 'blur' },
+    { type: 'number', message: '请输入数字', trigger: 'blur' },
+  ],
+  start_date: [{ required: true, message: '请选择开始时间', trigger: 'blur' }],
+  end_date: [{ required: true, message: '请选择结束时间', trigger: 'blur' }],
+})
+
 const onSubmit = () => {
-  if (isEdit) {
-    updateExamApi(Number(route.params.id), form).then(() => {
-      successMessage('修改成功')
-      router.push({ name: 'Exam' })
-    })
-  } else {
-    createExamApi(form).then(() => {
-      successMessage('创建成功')
-      router.push({ name: 'Exam' })
-    })
-  }
+  if (!ruleFormRef.value) return
+  ruleFormRef.value.validate((valid, fields) => {
+    if (valid) {
+      if (isEdit) {
+        updateExamApi(Number(route.params.id), form).then(() => {
+          successMessage('修改成功')
+          router.push({ name: 'Exam' })
+        })
+      } else {
+        createExamApi(form).then(() => {
+          successMessage('创建成功')
+          router.push({ name: 'Exam' })
+        })
+      }
+    } else {
+      console.log('error submit!!', fields)
+    }
+  })
 }
 
 const disableStartDate = (date: Date) => {
