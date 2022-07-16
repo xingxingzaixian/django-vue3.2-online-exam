@@ -74,7 +74,7 @@
 * [x] 封装Table和Tool组件
 * [x] 封装wangEditor组件
 * [x] 封装图片编辑组件
-* [ ] Form表单校验
+* [x] Form表单校验
 * [ ] 后端权限设计
 
 # 更新记录

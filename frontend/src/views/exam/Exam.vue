@@ -8,7 +8,16 @@
         <el-button class="button" type="text" v-permission="'editAndDelete'">进入考试</el-button>
         <div v-permission="'user'">
           <el-button class="button" type="text" @click="editExam(item)">编辑</el-button>
-          <el-button class="button" type="text" @click="deleteExam(item.id)">删除</el-button>
+          <el-popconfirm
+            title="确定要删除考试信息吗？"
+            confirm-button-text="确定"
+            cancel-button-text="取消"
+            @confirm="deleteExam(item.id)"
+          >
+            <template #reference>
+              <el-button class="button" type="text">删除</el-button>
+            </template>
+          </el-popconfirm>
         </div>
       </exam-item>
     </div>
@@ -59,6 +68,7 @@ const editExam = (row: ExamListItem) => {
 const deleteExam = (id: number) => {
   deleteExamApi(id).then(() => {
     successMessage('删除成功')
+    updateData()
   })
 }
 
@@ -94,34 +104,6 @@ watch(
     &:nth-child(6n) {
       margin-right: 0;
     }
-
-    // .info {
-    //   @apply w-full h-20;
-    // }
-
-    // .card-header {
-    //   @apply flex justify-between items-center;
-
-    //   span {
-    //     width: 50%;
-    //   }
-    // }
-
-    // .score {
-    //   @apply flex justify-between items-center;
-
-    //   span {
-    //     @apply text-sm;
-    //   }
-    // }
-
-    // .time {
-    //   @apply flex flex-col justify-start items-start;
-
-    //   span {
-    //     @apply text-sm;
-    //   }
-    // }
   }
 }
 

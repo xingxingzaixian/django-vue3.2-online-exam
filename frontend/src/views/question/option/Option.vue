@@ -12,8 +12,8 @@
           <pre v-html="scope.row.description" style="white-space: pre-wrap"></pre>
         </template>
         <template #action="scope">
-          <el-button size="small" @click="editOption(scope.row, scope.$index)">编辑</el-button>
-          <el-popconfirm title="确定删除此选项？" @confirm="deleteOption(scope.row, scope.$index)">
+          <el-button size="small" @click="editOption((scope as any).row, (scope as any).$index)">编辑</el-button>
+          <el-popconfirm title="确定删除此选项？" @confirm="deleteOption((scope as any).row, (scope as any).$index)">
             <template #reference>
               <el-button size="small" type="danger">删除</el-button>
             </template>
@@ -23,11 +23,11 @@
     </div>
     <teleport to="body">
       <el-dialog v-model="dialogFormVisible" title="编辑题目选项">
-        <el-form :model="form" label-width="70px">
-          <el-form-item label="选项内容">
-            <wang-editor v-model:html="form.content" v-model:text="form.text" mode="simple" style="min-width: 300px" />
+        <el-form ref="ruleFormRef" :model="form" :rules="rules" label-width="80px">
+          <el-form-item label="选项内容" prop="content">
+            <wang-editor v-model:html="form.content" mode="simple" style="min-width: 300px" />
           </el-form-item>
-          <el-form-item label="选项解释">
+          <el-form-item label="选项解释" prop="description">
             <wang-editor v-model:html="form.description" mode="simple" style="min-width: 300px" />
           </el-form-item>
         </el-form>
@@ -56,7 +56,14 @@ import {
 import { ColumnType, Pagination } from '/@/types/common'
 import WangEditor from '/@/components/WangEditor/WangEditor.vue'
 import { errorMessage, successMessage } from '/@/utils/message'
+import type { FormInstance, FormRules } from 'element-plus'
+import { validateWangeditor } from '/@/utils/utils'
 
+const ruleFormRef = ref<FormInstance>()
+const rules = reactive<FormRules>({
+  content: [{ validator: validateWangeditor, required: true, trigger: 'blur' }],
+  description: [{ validator: validateWangeditor, required: true, trigger: 'blur' }],
+})
 const tableData = reactive<QuestionOptionItem[]>([])
 const columnData: ColumnType[] = [
   {
@@ -88,7 +95,6 @@ const form = reactive<QuestionOptionItem>({
   content: '',
   description: '',
 })
-
 const pagination = reactive<Pagination>({
   total: 0,
   pageNo: 1,
@@ -101,23 +107,26 @@ const addQuestionOption = () => {
 }
 
 const onSubmit = async () => {
-  try {
-    isLoading.value = true
-    if (!isEdit) {
-      await createQuestionOptionApi(form)
-      successMessage('创建选项成功')
-    } else {
-      await updateQuestionOptionApi(currentId, form)
-      tableData.splice(editIndex, 1, form)
-      successMessage('更新选项成功')
+  ruleFormRef.value?.validate(async (valid, _) => {
+    if (valid) {
+      try {
+        isLoading.value = true
+        if (!isEdit) {
+          await createQuestionOptionApi(form)
+          successMessage('创建选项成功')
+        } else {
+          await updateQuestionOptionApi(currentId, form)
+          tableData.splice(editIndex, 1, form)
+          successMessage('更新选项成功')
+        }
+        dialogFormVisible.value = false
+      } catch (err) {
+        console.log(err)
+      } finally {
+        isLoading.value = false
+      }
     }
-    dialogFormVisible.value = false
-    updateData()
-  } catch (err) {
-    console.log(err)
-  } finally {
-    isLoading.value = false
-  }
+  })
 }
 
 const editOption = (row: QuestionOptionItem, index: number) => {
@@ -155,5 +164,11 @@ onMounted(() => {
 <style lang="less" scoped>
 .option {
   @apply w-1/2 mx-auto;
+}
+
+pre {
+  p {
+    @apply overflow-hidden text-ellipsis;
+  }
 }
 </style>
