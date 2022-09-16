@@ -1,7 +1,7 @@
 # django-vue3.2-online-exam
 
 ### 介绍
-基于 Django+Vue3.2+TypeScript 的在线考试系统，在线体验：http://exam.xingxingzaixian.fun，欢迎大家提issue
+基于 Django+Vue3.2+TypeScript 的在线考试系统，在线体验：http://small_bud_star.gitee.io/django-vue3.2-online-exam，欢迎大家提issue
 
 ### 功能简介
 
@@ -35,7 +35,7 @@
   > 安装好依赖以后，需要初始化数据库信息，执行 `pipenv run migrate`
   > 执行完上面的安装命令后，再执行 `pipenv run dev`，就启动了后端，在浏览器端访问 http://localhost:9527/docs 即可看到后端的 API 界面
 
-  ![API 文档](images/api.png)
+  ![API 文档](images/api.jpg)
 
 + 4.启动前端
   + 进入到前端代码路径 `cd frontend`
