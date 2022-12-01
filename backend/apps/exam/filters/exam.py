@@ -1,4 +1,4 @@
-from django_filters.filterset import FilterSet
+from django_filters import FilterSet
 from exam.models import TblExam
 
 

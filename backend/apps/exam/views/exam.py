@@ -8,7 +8,7 @@ from exam.filters import ExamFilter
 class ExamViewset(ModelViewSet):
     queryset = Model.objects.all().order_by('-id')
     serializer_class = Serializer
-    filter_class = ExamFilter
+    filterset_class = ExamFilter
 
     def perform_create(self, serializer):
         serializer.save(creator=self.request.user)

@@ -8,4 +8,4 @@ from question.filters import QuestionOptionFilter
 class QuestionOptionViewset(ModelViewSet):
     queryset = Model.objects.all().order_by('-id')
     serializer_class = Serializer
-    filter_class = QuestionOptionFilter
+    filterset_class = QuestionOptionFilter

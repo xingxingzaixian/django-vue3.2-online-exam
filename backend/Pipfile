@@ -16,7 +16,7 @@ drf-spectacular = {extras = ["sidecar"], version = "*"}
 [dev-packages]
 
 [requires]
-python_version = "3.8.11"
+python_version = "3.8"
 
 [scripts]
 dev = "python manage.py runserver 0.0.0.0:9527"

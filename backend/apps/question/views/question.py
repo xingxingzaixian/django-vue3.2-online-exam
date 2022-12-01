@@ -8,7 +8,7 @@ from question.serializers import QuestionCreateSerializer, QuestionListSerialize
 class QuestionViewset(ModelViewSet):
     queryset = Model.objects.all().order_by('id')
     serializer_class = QuestionCreateSerializer
-    filter_class = QuestionFilter
+    filterset_class = QuestionFilter
     
     def get_serializer_class(self):
         if self.action == 'list':
